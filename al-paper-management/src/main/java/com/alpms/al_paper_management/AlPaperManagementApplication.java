@@ -1,13 +1,11 @@
-package com.example.DEA_Assignment;
+package com.alpms.al_paper_management;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AlHorizonApplication {
-
+public class AlPaperManagementApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(AlHorizonApplication.class, args);
+		SpringApplication.run(AlPaperManagementApplication.class, args);
 	}
-
 }
