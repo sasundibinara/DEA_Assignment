@@ -1,0 +1,83 @@
+package com.alpms.al_paper_management.papers.controller;
+
+import com.alpms.al_paper_management.papers.model.Paper;
+import com.alpms.al_paper_management.papers.service.PaperService;
+import com.alpms.al_paper_management.subjects.service.SubjectService;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+@Controller
+@RequestMapping("/papers")
+public class PaperController {
+    private final PaperService service;
+    private final SubjectService subjectService;
+
+    public PaperController(PaperService service, SubjectService subjectService) {
+        this.service = service;
+        this.subjectService = subjectService;
+    }
+
+    // 📄 List all papers
+    @GetMapping
+    public String list(Model model) {
+        model.addAttribute("papers", service.all());
+        return "papers/list";
+    }
+
+    // 📤 Show upload form
+    @GetMapping("/upload")
+    public String uploadForm(Model model) {
+        model.addAttribute("types", Paper.Type.values());
+        model.addAttribute("subjects", subjectService.findAll());
+        return "papers/upload";
+    }
+
+    // 📥 Handle upload
+    @PostMapping
+    public String upload(@RequestParam String title,
+                         @RequestParam Integer year,
+                         @RequestParam Paper.Type type,
+                         @RequestParam("subjectId") Long subjectId,
+                         @RequestParam("pdf") MultipartFile pdf,
+                         Model model) {
+        try {
+            service.create(title, year, type, subjectId, pdf);
+            return "redirect:/papers";
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            model.addAttribute("types", Paper.Type.values());
+            model.addAttribute("subjects", subjectService.findAll());
+            return "papers/upload";
+        }
+    }
+
+    // 🗑️ Delete paper
+    @PostMapping("/{id}/delete")
+    public String delete(@PathVariable Long id) {
+        service.delete(id);
+        return "redirect:/papers";
+    }
+
+    // 🆕 Download paper (ADD THIS METHOD)
+    @GetMapping("/{id}/download")
+    public ResponseEntity<Resource> downloadPaper(@PathVariable Long id) throws IOException {
+        Paper paper = service.get(id);
+        Path path = Paths.get(paper.getFilePath());
+        Resource resource = new UrlResource(path.toUri());
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + path.getFileName() + "\"")
+                .body(resource);
+    }
+
+}
+
