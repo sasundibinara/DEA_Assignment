@@ -1,5 +1,5 @@
 package com.alpms.al_paper_management.auth.controller;
-package com.alpms.al_paper_management.auth.controller;
+
 
 
 import com.alpms.al_paper_management.auth.model.User;
