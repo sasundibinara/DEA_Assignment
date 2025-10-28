@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/><title>Upload Paper</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<h2>Upload Paper (PDF)</h2>
+
+<div th:if="${error}" style="color:red" th:text="${error}"></div>
+
+<form th:action="@{/papers}" method="post" enctype="multipart/form-data">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+    <div>
+        <label>Title</label>
+        <input name="title" required/>
+    </div>
+
+    <div>
+        <label>Year</label>
+        <input name="year" type="number" min="2000" max="2100" required/>
+    </div>
+
+    <div>
+        <label>Type</label>
+        <select name="type">
+            <option th:each="t : ${types}" th:value="${t}" th:text="${t}"></option>
+        </select>
+    </div>
+
+    <div>
+        <label>Subject</label>
+        <select name="subjectId" required>
+            <option value="" disabled selected>-- Select Subject --</option>
+            <option th:each="s : ${subjects}" th:value="${s.id}" th:text="${s.name}"></option>
+        </select>
+    </div>
+
+    <div>
+        <label>PDF</label>
+        <input name="pdf" type="file" accept="application/pdf" required/>
+    </div>
+
+    <button type="submit">Upload</button>
+</form>
+
+<p><a th:href="@{/papers}">← Back</a></p>
+</body>
+</html>
