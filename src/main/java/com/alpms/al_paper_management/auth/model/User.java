@@ -1,6 +1,5 @@
 package com.alpms.al_paper_management.auth.model;
 
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
