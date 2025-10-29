@@ -1,3 +1,65 @@
 body { font-family: system-ui, Arial, sans-serif; margin: 24px; }
 nav a { margin-right: 12px; text-decoration: none; }
 table { border-collapse: collapse; }
+
+.login-page {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-page .login-card {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    padding: 2rem;
+    width: 100%;
+    max-width: 400px;
+    animation: slideIn 0.7s ease-out;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.login-page .login-card h2 {
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #333;
+    text-align: center;
+}
+
+.login-page .form-control:focus {
+    border-color: #2575fc;
+    box-shadow: 0 0 5px rgba(37,117,252,0.5);
+}
+
+.login-page .btn-login {
+    background-color: #2575fc;
+    border: none;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.login-page .btn-login:hover {
+    background-color: #1a5edb;
+}
+
+.login-page .text-link {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.login-page .text-link a {
+    color: #2575fc;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.login-page .text-link a:hover {
+    text-decoration: underline;
+}
