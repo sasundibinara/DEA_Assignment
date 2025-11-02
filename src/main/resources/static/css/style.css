@@ -18,8 +18,8 @@ body {
     width: 100%;
     height: 100%;
     background: linear-gradient(135deg, #1e3c72 0%, #2a5298 25%, #1e88e5 50%, #2196f3 75%, #1e3c72 100%);
-    background-size: 400% 400%;
-    animation: gradientShift 20s ease infinite;
+    background-size: 200% 200%;
+    animation: gradientShift 15s ease infinite;
     z-index: -1;
 }
 
@@ -331,4 +331,20 @@ body {
     0%, 100% { transform: translateX(0); }
     10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
     20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+.toast-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 16px 24px;
+    border-radius: 8px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 10000;
+    animation: slideInRight 0.3s ease;
 }
