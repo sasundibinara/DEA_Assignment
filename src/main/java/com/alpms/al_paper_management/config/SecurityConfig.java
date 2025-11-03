@@ -1,6 +1,5 @@
 package com.alpms.al_paper_management.config;
 
-
 import com.alpms.al_paper_management.auth.model.User;
 import com.alpms.al_paper_management.auth.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
@@ -50,10 +49,12 @@ public class SecurityConfig {
                 )
 
                 .formLogin(login -> login
-                        .loginPage("/auth/login")          // GET  -> render login page
-                        .loginProcessingUrl("/auth/login") // POST -> Spring Security processes credentials here
-                        .failureUrl("/auth/login?error")   // on bad credentials
-                        .defaultSuccessUrl("/", true)      // on success
+                        .loginPage("/auth/login")            // GET - display login page
+                        .loginProcessingUrl("/auth/process") // POST - handle credentials
+                        .usernameParameter("email")
+                        .passwordParameter("password")
+                        .failureUrl("/auth/login?error")
+                        .defaultSuccessUrl("/home", true)
                         .permitAll()
                 )
 

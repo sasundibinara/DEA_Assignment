@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+
     // Email Validation
     function validateEmail(email) {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
