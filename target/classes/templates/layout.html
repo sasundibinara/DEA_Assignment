@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:fragment="layout (pageTitle, content)">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Page title from child -->
+    <title th:replace="${pageTitle}">ALHorizon</title>
+    <link rel="stylesheet" th:href="@{/css/login.css}" />
+</head>
+<body>
+<header>
+    <nav>
+        <a th:href="@{/}">Home</a>
+        <a th:href="@{/subjects}">Subjects</a>
+        <a th:href="@{/logout}">Logout</a>
+    </nav>
+</header>
+
+<main>
+    <!-- Child content injected here -->
+    <div th:insert="${content}"></div>
+</main>
+
+</body>
+</html>

@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::title}, ~{::section})}">
+<head>
+    <title>Home</title>
+</head>
+
+<section>
+    <h1>Welcome to A/L Paper Management</h1>
+    <p>Logged in successfully. Use the nav to continue.</p>
+    <p><a th:href="@{/subjects}">Go to Subjects</a></p>
+</section>
+</html>
