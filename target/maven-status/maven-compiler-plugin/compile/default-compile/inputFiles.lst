@@ -1,0 +1,15 @@
+C:\DEA_Assignment\al-paper-management\src\main\java\com\alpms\al_paper_management\AlPaperManagementApplication.java
+C:\DEA_Assignment\al-paper-management\src\main\java\com\alpms\al_paper_management\auth\controller\AuthController.java
+C:\DEA_Assignment\al-paper-management\src\main\java\com\alpms\al_paper_management\auth\model\User.java
+C:\DEA_Assignment\al-paper-management\src\main\java\com\alpms\al_paper_management\auth\repository\UserRepository.java
+C:\DEA_Assignment\al-paper-management\src\main\java\com\alpms\al_paper_management\config\SecurityConfig.java
+C:\DEA_Assignment\al-paper-management\src\main\java\com\alpms\al_paper_management\papers\controller\PaperController.java
+C:\DEA_Assignment\al-paper-management\src\main\java\com\alpms\al_paper_management\papers\model\Paper.java
+C:\DEA_Assignment\al-paper-management\src\main\java\com\alpms\al_paper_management\papers\repository\PaperRepository.java
+C:\DEA_Assignment\al-paper-management\src\main\java\com\alpms\al_paper_management\papers\service\FileStorageService.java
+C:\DEA_Assignment\al-paper-management\src\main\java\com\alpms\al_paper_management\papers\service\PaperService.java
+C:\DEA_Assignment\al-paper-management\src\main\java\com\alpms\al_paper_management\subjects\controller\SubjectController.java
+C:\DEA_Assignment\al-paper-management\src\main\java\com\alpms\al_paper_management\subjects\model\Subject.java
+C:\DEA_Assignment\al-paper-management\src\main\java\com\alpms\al_paper_management\subjects\repository\SubjectRepository.java
+C:\DEA_Assignment\al-paper-management\src\main\java\com\alpms\al_paper_management\subjects\service\SubjectService.java
+C:\DEA_Assignment\al-paper-management\src\main\java\com\alpms\al_paper_management\web\HomeController.java
