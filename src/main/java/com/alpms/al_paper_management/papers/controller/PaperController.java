@@ -27,10 +27,38 @@ public class PaperController {
         this.subjectService = subjectService;
     }
 
-    // 📄 List all papers
+    // ✅ Single list endpoint (supports filters)
     @GetMapping
-    public String list(Model model) {
+    public String list(
+            @RequestParam(required = false) Long subjectId,
+            @RequestParam(required = false) Integer year,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            Model model) {
+
+        boolean noFilters = (subjectId == null && year == null);
+
+        // Use pageable result from service
+        var paperPage = noFilters
+                ? service.findPaginated(page, size)
+                : service.searchPaginated(subjectId, year, page, size);
+
+        model.addAttribute("paperPage", paperPage);
+        model.addAttribute("papers", paperPage.getContent());
+
+        // For filters and pagination controls
+        model.addAttribute("subjects", subjectService.findAll());
+        model.addAttribute("selectedSubjectId", subjectId);
+        model.addAttribute("selectedYear", year);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", paperPage.getTotalPages());
+
+        return "papers/list";
+    }
+    @GetMapping("/all")
+    public String listAll(Model model) {
         model.addAttribute("papers", service.all());
+        model.addAttribute("subjects", subjectService.findAll());
         return "papers/list";
     }
 
@@ -68,16 +96,15 @@ public class PaperController {
         return "redirect:/papers";
     }
 
-    // 🆕 Download paper (ADD THIS METHOD)
+    // ⬇️ Download paper
     @GetMapping("/{id}/download")
     public ResponseEntity<Resource> downloadPaper(@PathVariable Long id) throws IOException {
         Paper paper = service.get(id);
         Path path = Paths.get(paper.getFilePath());
         Resource resource = new UrlResource(path.toUri());
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + path.getFileName() + "\"")
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=\"" + path.getFileName() + "\"")
                 .body(resource);
     }
-
 }
-
