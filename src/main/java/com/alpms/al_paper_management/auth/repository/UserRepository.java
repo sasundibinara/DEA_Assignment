@@ -9,6 +9,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByEmailIgnoreCase(String email);
 
-    // ✅ use the actual field on User: "role"
+    //  use the actual field on User: "role"
     long countByRole(User.Role role);
 }
