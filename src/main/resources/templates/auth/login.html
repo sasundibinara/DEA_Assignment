@@ -1,105 +1,64 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - ALHorizon</title>
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- Custom CSS -->
-    <link th:href="@{/css/login.css}" rel="stylesheet">
-
+    <title>Login | AL Paper Management</title>
+    <link rel="stylesheet" th:href="@{/css/login.css}">
 </head>
 <body>
-<!-- Animated Gradient Background -->
-<div class="gradient-background"></div>
-
-<!-- Login Container -->
-<div class="login-wrapper">
+<div class="login-container">
     <div class="login-card">
-        <!-- Logo/Header -->
-        <div class="login-header">
-            <h1 class="login-title">Login</h1>
+        <div class="logo">
+            <img src="/images/Wlogo.jpg" alt="AL Paper Management Logo" class="logo-img">
+            <h2>AL Paper Management</h2>
         </div>
 
+        <h3>ALHORIZON</h3>
+        <p class="subtitle">login to access your dashboard</p>
+
         <!-- Login Form -->
-        <form id="loginForm" th:action="@{/auth/process}" method="post" class="login-form" novalidate>
-        <div class="form-group">
-                <label for="email" class="form-label">Email</label>
-                <input
-                        type="email"
-                        class="form-input"
-                        id="email"
-                        name="email"
-                        placeholder="Enter your email"
-                        required
-                >
-                <div class="invalid-feedback">
-                    Please enter a valid email address.
-                </div>
+        <form th:action="@{/auth/login}" method="post" class="login-form" id="loginForm">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+            <!-- Email -->
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="username" placeholder="Enter your email" required>
+                <div class="error-message" id="emailError"></div>
             </div>
 
-            <div class="form-group">
-                <label for="password" class="form-label">Password</label>
+
+            <!-- Password -->
+            <div class="input-group">
+                <label for="password">Password</label>
                 <div class="password-wrapper">
-                    <input
-                            type="password"
-                            class="form-input"
-                            id="password"
-                            name="password"
-                            placeholder="Enter your password"
-                            required
-                    >
-                    <button type="button" class="password-toggle" id="togglePassword">
-                        <i class="fas fa-eye"></i>
-                    </button>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                    <span class="toggle-password" onclick="togglePassword()">👁</span>
                 </div>
-                <div class="invalid-feedback">
-                    Please enter your password.
-                </div>
+                <div class="error-message" id="passwordError"></div>
             </div>
 
-    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-
-            <!-- Remember Me & Forgot Password INSIDE the form -->
-            <div class="form-options d-flex justify-content-between align-items-center mb-3">
-                <label class="remember-checkbox mb-0">
-                    <input type="checkbox" name="remember-me" id="rememberMe">
-                    <span class="checkmark"></span>
-                    <span class="remember-text">Remember me</span>
-                </label>
-                <a href="#" class="forgot-link">Forgot password?</a>
+            <!-- Role -->
+            <div class="input-group">
+                <label for="role">Role</label>
+                <select id="role" name="role" required>
+                    <option value="">Select your role</option>
+                    <option value="STUDENT">Student</option>
+                    <option value="TEACHER">Teacher</option>
+                    <option value="ADMIN">Admin</option>
+                </select>
+                <div class="error-message" id="roleError"></div>
             </div>
 
-            <!-- Login Button -->
-            <button type="submit" class="btn-login w-100 mb-3">
-                Login
-                <span class="btn-loader" style="display: none;">
-            <i class="fas fa-spinner fa-spin"></i>
-          </span>
-            </button>
-
-            <!-- Register Link -->
-            <div class="register-link text-center">
-                Don't have an account?
-                <a th:href="@{/auth/register}">Register here</a>
-            </div>
+            <button type="submit" class="btn-login">Login</button>
         </form>
+
+        <p class="footer-text">
+            Don’t have an account? <a th:href="@{/auth/register}">Register</a>
+        </p>
     </div>
 </div>
 
-<p><a th:href="@{/}">← Home</a></p>
-
-            <!-- Bootstrap Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- Custom JavaScript -->
 <script th:src="@{/js/login.js}"></script>
-
 </body>
 </html>

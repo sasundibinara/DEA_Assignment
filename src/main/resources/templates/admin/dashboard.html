@@ -1,0 +1,596 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard | AL Paper Management</title>
+
+    <!-- Base app styles -->
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            --card-bg: #ffffff;
+            --card-radius: 18px;
+            --sidebar-width: 240px;
+            --primary: #5b5ef7;
+            --primary-soft: rgba(91, 94, 247, 0.15);
+            --text-main: #1f2341;
+            --text-muted: #7c7f9a;
+            --danger: #ff4d4f;
+            --success: #1abc9c;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            color: var(--text-main);
+            background: #0f1123;
+            background-image: radial-gradient(circle at 0 0, rgba(255,255,255,0.12) 0, transparent 45%),
+            radial-gradient(circle at 100% 100%, rgba(255,255,255,0.12) 0, transparent 45%);
+            display: flex;
+        }
+
+        /* ===== SIDEBAR ===== */
+
+        .sidebar {
+            width: var(--sidebar-width);
+            background: rgba(10, 10, 30, 0.9);
+            backdrop-filter: blur(18px);
+            border-right: 1px solid rgba(255, 255, 255, 0.04);
+            padding: 1.5rem 1.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            position: fixed;
+            inset: 0 auto 0 0;
+            z-index: 20;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-area img {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            object-fit: cover;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+        }
+
+        .logo-text-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .logo-text-sub {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .nav-section-title {
+            margin: 1rem 0 0.2rem;
+            font-size: 0.75rem;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.45);
+        }
+
+        .nav-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .nav-item a {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.55rem 0.7rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.78);
+            text-decoration: none;
+            transition: background 0.15s ease, transform 0.1s ease;
+        }
+
+        .nav-item a span.icon {
+            font-size: 1.1rem;
+        }
+
+        .nav-item a:hover {
+            background: rgba(255,255,255,0.06);
+            transform: translateY(-1px);
+        }
+
+        .nav-item a.active {
+            background: var(--primary-soft);
+            color: #fff;
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.55);
+        }
+
+        .sidebar-footer a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+        }
+
+        /* ===== MAIN CONTENT ===== */
+
+        .main {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            padding: 1.75rem 2.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .top-bar-left h1 {
+            font-size: 1.4rem;
+            color: #fff;
+        }
+
+        .top-bar-left p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .top-bar-right {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .pill {
+            padding: 0.25rem 0.7rem;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.06);
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 999px;
+            background: linear-gradient(135deg,#f093fb,#f5576c);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .btn-outline {
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.25);
+            background: transparent;
+            padding: 0.3rem 0.9rem;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.9);
+            cursor: pointer;
+        }
+
+        /* ===== CARDS & GRID ===== */
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 1.1rem;
+        }
+
+        .card {
+            background: radial-gradient(circle at top left, rgba(255,255,255,0.2), transparent 50%),
+            var(--card-bg);
+            border-radius: var(--card-radius);
+            padding: 1rem 1.1rem;
+            box-shadow: 0 12px 30px rgba(5, 5, 40, 0.45);
+            border: 1px solid rgba(255,255,255,0.04);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.6rem;
+        }
+
+        .card-title {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .card-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-top: 0.2rem;
+        }
+
+        .card-chip {
+            padding: 0.1rem 0.6rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            background: rgba(91,94,247,0.12);
+            color: var(--primary);
+        }
+
+        .trend-up {
+            color: var(--success);
+            font-size: 0.8rem;
+        }
+
+        .trend-down {
+            color: var(--danger);
+            font-size: 0.8rem;
+        }
+
+        .layout-2col {
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            gap: 1.1rem;
+        }
+
+        .section-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--text-main);
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+
+        .table th, .table td {
+            padding: 0.45rem 0.3rem;
+            text-align: left;
+        }
+
+        .table th {
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .table tbody tr:nth-child(odd) {
+            background: rgba(15,17,35,0.03);
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.12rem 0.55rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+        }
+
+        .badge.success {
+            background: rgba(26, 188, 156, 0.12);
+            color: var(--success);
+        }
+
+        .badge.warning {
+            background: rgba(253, 203, 110, 0.14);
+            color: #e67e22;
+        }
+
+        .badge.info {
+            background: rgba(91, 94, 247, 0.1);
+            color: var(--primary);
+        }
+
+        .link-ghost {
+            border: none;
+            background: transparent;
+            color: var(--primary);
+            font-size: 0.8rem;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        /* MINI CHART PLACEHOLDER */
+        .sparkline {
+            height: 46px;
+            width: 100%;
+            border-radius: 14px;
+            background: linear-gradient(135deg, rgba(91,94,247,.14), rgba(46, 204, 113, .12));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sparkline::after {
+            content: "";
+            position: absolute;
+            inset: 10% 0 0 10%;
+            border-radius: inherit;
+            border-bottom: 2px solid rgba(255,255,255,0.6);
+            border-right: 2px solid rgba(255,255,255,0.6);
+            transform: skewX(-20deg);
+            opacity: 0.7;
+        }
+
+        /* ===== RESPONSIVE ===== */
+
+        @media (max-width: 960px) {
+            .sidebar {
+                display: none;
+            }
+            .main {
+                margin-left: 0;
+                padding: 1rem 1.1rem 1.5rem;
+            }
+            .grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+            .layout-2col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        /* base grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 1rem;
+        }
+
+        /* 2-column cards/table layout */
+        .layout-2col {
+            display: grid;
+            grid-template-columns: 2fr 2fr;
+            gap: 1rem;
+        }
+
+        /* responsive breakpoints */
+        @media (max-width: 1024px) {
+            .grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+            .layout-2col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- ===== SIDEBAR ===== -->
+<aside class="sidebar">
+    <div class="logo-area">
+        <!-- replace logo.png with your actual file in /static/images -->
+        <img th:src="@{/images/logo.png}" alt="Logo">
+        <div>
+            <div class="logo-text-title">AL Paper Management</div>
+            <div class="logo-text-sub">Admin Dashboard</div>
+        </div>
+    </div>
+
+    <div>
+        <div class="nav-section-title">Main</div>
+        <ul class="nav-list">
+            <li class="nav-item">
+                <a href="#" class="active">
+                    <span class="icon">📊</span>
+                    <span>Overview</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a th:href="@{/papers}">
+                    <span class="icon">📄</span>
+                    <span>Papers</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a th:href="@{/subjects}">
+                    <span class="icon">📘</span>
+                    <span>Subjects</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a th:href="@{/exams}">
+                    <span class="icon">📝</span>
+                    <span>Exam Sessions</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="nav-section-title">Users</div>
+        <ul class="nav-list">
+            <li class="nav-item">
+                <!-- adapt this URL to whatever endpoint you use for user management -->
+                <a th:href="@{/admin/users}">
+                    <span class="icon">👥</span>
+                    <span>Manage Users</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="sidebar-footer">
+        <p>Signed in as <strong th:text="${#authentication?.name}">admin@example.com</strong></p>
+        <p style="margin-top:0.4rem;">
+            <a th:href="@{/}">Back to site</a> ·
+            <a th:href="@{/auth/login}">Logout</a>
+        </p>
+    </div>
+</aside>
+
+<!-- ===== MAIN ===== -->
+<main class="main">
+    <header class="top-bar">
+        <div class="top-bar-left">
+            <h1>Welcome back, <span th:text="${adminName} ?: 'Admin'">Admin</span> 👋</h1>
+            <p>Here’s a quick overview of activity across papers, exams and users.</p>
+        </div>
+        <div class="top-bar-right">
+            <span class="pill">Role: Admin</span>
+            <button class="btn-outline" onclick="location.href='/auth/logout'">Logout</button>
+            <div class="avatar" th:text="${#strings.substring(#authentication?.name,0,1).toUpperCase()}">A</div>
+        </div>
+    </header>
+
+    <!-- KPI CARDS -->
+    <section class="grid" style="margin-top:0.3rem;">
+        <article class="card">
+            <div class="card-header">
+                <div>
+                    <div class="card-title">Total Papers</div>
+                    <div class="card-value" th:text="${stats?.totalPapers} ?: 0">128</div>
+                </div>
+                <span class="card-chip">+12 new</span>
+            </div>
+            <div class="sparkline"></div>
+        </article>
+
+        <article class="card">
+            <div class="card-header">
+                <div>
+                    <div class="card-title">Active Subjects</div>
+                    <div class="card-value" th:text="${stats?.activeSubjects} ?: 0">14</div>
+                </div>
+                <span class="trend-up">▲ 5.2%</span>
+            </div>
+            <p class="card-subtitle" style="font-size:0.8rem;color:var(--text-muted);margin-top:0.5rem;">
+                Subjects with at least one recent paper.
+            </p>
+        </article>
+
+        <article class="card">
+            <div class="card-header">
+                <div>
+                    <div class="card-title">Upcoming Exams</div>
+                    <div class="card-value" th:text="${stats?.upcomingExams} ?: 0">7</div>
+                </div>
+                <span class="badge info">This week</span>
+            </div>
+            <p style="font-size:0.8rem;color:var(--text-muted);margin-top:0.4rem;">
+                Remember to upload marking schemes before exam dates.
+            </p>
+        </article>
+
+        <article class="card">
+            <div class="card-header">
+                <div>
+                    <div class="card-title">Registered Users</div>
+                    <div class="card-value" th:text="${stats?.totalUsers} ?: 0">56</div>
+                </div>
+                <span class="badge success">Stable</span>
+            </div>
+            <p style="font-size:0.8rem;color:var(--text-muted);margin-top:0.4rem;">
+                Includes students, teachers and admins.
+            </p>
+        </article>
+    </section>
+
+    <!-- TABLES / LISTS -->
+    <section class="layout-2col">
+        <article class="card">
+            <h2 class="section-title">Recent Papers</h2>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Subject</th>
+                    <th>Type</th>
+                    <th>Year</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="p : ${recentPapers}">
+                    <td th:text="${p.title}">Sample Paper Title</td>
+                    <td th:text="${p.subject.name}">Physics</td>
+                    <td th:text="${p.type}">PAST</td>
+                    <td th:text="${p.year}">2024</td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(recentPapers)}">
+                    <td colspan="4" style="color:var(--text-muted);font-size:0.85rem;">
+                        No recent papers found.
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div style="margin-top:0.6rem;text-align:right;">
+                <button class="link-ghost" onclick="location.href='/papers'">View all papers ⟶</button>
+            </div>
+        </article>
+
+        <article class="card">
+            <h2 class="section-title">Latest Exam Sessions</h2>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="e : ${recentExams}">
+                    <td th:text="${e.subject.name}">Chemistry</td>
+                    <td th:text="${#temporals.format(e.examDate, 'yyyy-MM-dd HH:mm')}">2025-01-21</td>
+                    <td>
+                        <span class="badge"
+                              th:classappend="${e.active} ? ' success' : ' warning'"
+                              th:text="${e.active} ? 'Active' : 'Closed'">
+                            Active
+                        </span>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(recentExams)}">
+                    <td colspan="3" style="color:var(--text-muted);font-size:0.85rem;">
+                        No upcoming exam sessions scheduled.
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div style="margin-top:0.6rem;text-align:right;">
+                <button class="link-ghost" onclick="location.href='/exams'">Manage exams ⟶</button>
+            </div>
+        </article>
+    </section>
+</main>
+
+<script th:src="@{/js/main.js}"></script>
+<script>
+    // Example: tiny interaction for later (you can expand in main.js)
+    console.log("Admin dashboard loaded");
+</script>
+</body>
+</html>
