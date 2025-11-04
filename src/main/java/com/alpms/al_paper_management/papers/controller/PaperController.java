@@ -27,7 +27,7 @@ public class PaperController {
         this.subjectService = subjectService;
     }
 
-    // ✅ Single list endpoint (supports filters)
+    //  Single list endpoint (supports filters)
     @GetMapping
     public String list(
             @RequestParam(required = false) Long subjectId,
