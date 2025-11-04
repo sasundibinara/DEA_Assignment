@@ -44,4 +44,6 @@ public class AuthController {
         users.save(user);
         return "redirect:/auth/login?registered";
     }
+
+
 }
