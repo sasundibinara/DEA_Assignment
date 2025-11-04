@@ -10,6 +10,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+
 
 import java.io.IOException;
 import java.util.List;
@@ -72,4 +75,20 @@ public class PaperService {
             return papers.findAll(pageable);
         }
     }
+
+
+    // total papers
+    public long countAll() {
+        return papers.count();
+    }
+
+    // recent N papers (for the table)
+    public List<Paper> findRecent(int limit) {
+        return papers.findAll(
+                PageRequest.of(0, limit, Sort.by(Sort.Direction.DESC, "id"))
+        ).getContent();
+    }
+
+
+
 }
