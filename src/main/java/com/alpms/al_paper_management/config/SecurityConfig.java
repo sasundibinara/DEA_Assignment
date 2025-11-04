@@ -6,12 +6,14 @@ import com.alpms.al_paper_management.auth.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+@EnableMethodSecurity(prePostEnabled = true)
 @Configuration
 public class SecurityConfig {
 
@@ -53,7 +55,7 @@ public class SecurityConfig {
                         .loginPage("/auth/login")          // GET  -> render login page
                         .loginProcessingUrl("/auth/login") // POST -> Spring Security processes credentials here
                         .failureUrl("/auth/login?error")   // on bad credentials
-                        .defaultSuccessUrl("/", true)      // on success
+                        .defaultSuccessUrl("/?success", true)      // on success
                         .permitAll()
                 )
 
