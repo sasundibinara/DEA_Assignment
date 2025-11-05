@@ -1,209 +1,169 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const registerForm = document.getElementById('registerForm');
-    const fullNameInput = document.getElementById('fullName');
-    const emailInput = document.getElementById('email');
-    const passwordInput = document.getElementById('password');
-    const roleSelect = document.getElementById('role');
-    const togglePasswordBtn = document.getElementById('togglePassword');
-    const registerBtn = registerForm.querySelector('.btn-register');
+// Toggle Password Visibility
+function togglePassword() {
+    const pwd = document.getElementById("password");
+    if (!pwd) return;
+    pwd.type = pwd.type === "password" ? "text" : "password";
+}
 
-    // Password Toggle Functionality
-    if (togglePasswordBtn) {
-        togglePasswordBtn.addEventListener('click', function() {
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("registerForm");
+    const fullNameInput = document.getElementById("fullName");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const roleSelect = document.getElementById("role");
 
-            const icon = this.querySelector('i');
-            if (type === 'text') {
-                icon.classList.remove('fa-eye');
-                icon.classList.add('fa-eye-slash');
-            } else {
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
-            }
+    const fullNameError = document.getElementById("fullNameError");
+    const emailError = document.getElementById("emailError");
+    const passwordError = document.getElementById("passwordError");
+    const roleError = document.getElementById("roleError");
+
+    // --- FRONT-END VALIDATION ---
+    form.addEventListener("submit", function (e) {
+        let valid = true;
+
+        // Clear old errors
+        if (fullNameError) fullNameError.textContent = "";
+        if (emailError) emailError.textContent = "";
+        if (passwordError) passwordError.textContent = "";
+        if (roleError) roleError.textContent = "";
+
+        [fullNameInput, emailInput, passwordInput, roleSelect].forEach(el => {
+            if (el) el.classList.remove("input-error");
         });
-    }
 
-    // Email Validation Function
-    function validateEmail(email) {
-        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return re.test(String(email).toLowerCase());
-    }
+        // Get values
+        const fullNameValue = fullNameInput ? fullNameInput.value.trim() : "";
+        const emailValue = emailInput ? emailInput.value.trim() : "";
+        const passwordValue = passwordInput ? passwordInput.value.trim() : "";
+        const roleValue = roleSelect ? roleSelect.value : "";
 
-    // Real-time Validation
-    fullNameInput.addEventListener('blur', function() {
-        if (this.value.trim().length < 2) {
-            this.classList.add('is-invalid');
-        } else {
-            this.classList.remove('is-invalid');
-        }
-    });
-
-    fullNameInput.addEventListener('input', function() {
-        if (this.classList.contains('is-invalid') && this.value.trim().length >= 2) {
-            this.classList.remove('is-invalid');
-        }
-    });
-
-    emailInput.addEventListener('blur', function() {
-        if (!validateEmail(this.value)) {
-            this.classList.add('is-invalid');
-        } else {
-            this.classList.remove('is-invalid');
-        }
-    });
-
-    emailInput.addEventListener('input', function() {
-        if (this.classList.contains('is-invalid') && validateEmail(this.value)) {
-            this.classList.remove('is-invalid');
-        }
-    });
-
-    passwordInput.addEventListener('blur', function() {
-        if (this.value.length < 8) {
-            this.classList.add('is-invalid');
-        } else {
-            this.classList.remove('is-invalid');
-        }
-    });
-
-    passwordInput.addEventListener('input', function() {
-        if (this.classList.contains('is-invalid') && this.value.length >= 8) {
-            this.classList.remove('is-invalid');
-        }
-    });
-
-    // Form Submission Handler
-    registerForm.addEventListener('submit', function(e) {
-        // Basic client-side validation before server submission
-        let isValid = true;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         // Validate Full Name
-        if (fullNameInput.value.trim().length < 2) {
-            fullNameInput.classList.add('is-invalid');
-            isValid = false;
+        if (!fullNameValue) {
+            if (fullNameError) fullNameError.textContent = "Full name is required.";
+            if (fullNameInput) fullNameInput.classList.add("input-error");
+            valid = false;
+        } else if (fullNameValue.length < 2) {
+            if (fullNameError) fullNameError.textContent = "Full name must be at least 2 characters.";
+            if (fullNameInput) fullNameInput.classList.add("input-error");
+            valid = false;
         }
 
         // Validate Email
-        if (!validateEmail(emailInput.value)) {
-            emailInput.classList.add('is-invalid');
-            isValid = false;
+        if (!emailValue) {
+            if (emailError) emailError.textContent = "Email is required.";
+            if (emailInput) emailInput.classList.add("input-error");
+            valid = false;
+        } else if (!emailRegex.test(emailValue)) {
+            if (emailError) emailError.textContent = "Please enter a valid email address.";
+            if (emailInput) emailInput.classList.add("input-error");
+            valid = false;
         }
 
         // Validate Password
-        if (passwordInput.value.length < 8) {
-            passwordInput.classList.add('is-invalid');
-            isValid = false;
+        if (!passwordValue) {
+            if (passwordError) passwordError.textContent = "Password is required.";
+            if (passwordInput) passwordInput.classList.add("input-error");
+            valid = false;
+        } else if (passwordValue.length < 6) {
+            if (passwordError) passwordError.textContent = "Password must be at least 6 characters.";
+            if (passwordInput) passwordInput.classList.add("input-error");
+            valid = false;
+        } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(passwordValue)) {
+            if (passwordError) passwordError.textContent = "Password must contain uppercase, lowercase, and number.";
+            if (passwordInput) passwordInput.classList.add("input-error");
+            valid = false;
         }
 
         // Validate Role
-        if (!roleSelect.value) {
-            roleSelect.classList.add('is-invalid');
-            isValid = false;
+        if (!roleValue) {
+            if (roleError) roleError.textContent = "Please select your role.";
+            if (roleSelect) roleSelect.classList.add("input-error");
+            valid = false;
         }
 
-        // If client-side validation fails, prevent submission
-        if (!isValid) {
-            e.preventDefault();
-            showToast('Please fill in all fields correctly', 'error');
-            return false;
-        }
-
-        // Show loading state
-        registerBtn.classList.add('loading');
-        registerBtn.disabled = true;
-
-        // Form will be submitted to server
-        // Loading state will be visible during server processing
+        if (!valid) e.preventDefault();
     });
 
-    // Toast Notification Function
-    function showToast(message, type = 'success') {
-        const toast = document.createElement('div');
-        toast.className = `toast-notification toast-${type}`;
-        toast.innerHTML = `
-            <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
-            <span>${message}</span>
-        `;
-
-        Object.assign(toast.style, {
-            position: 'fixed',
-            top: '20px',
-            right: '20px',
-            padding: '16px 24px',
-            background: type === 'success' ? '#48bb78' : '#f56565',
-            color: 'white',
-            borderRadius: '8px',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-            zIndex: '10000',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px',
-            animation: 'slideInRight 0.3s ease',
-            fontSize: '14px',
-            fontWeight: '500'
-        });
-
-        document.body.appendChild(toast);
-
-        setTimeout(() => {
-            toast.style.animation = 'slideOutRight 0.3s ease';
-            setTimeout(() => toast.remove(), 300);
-        }, 3000);
+    // --- ALERT HANDLER ---
+    const params = new URLSearchParams(window.location.search);
+    if (params.has("error")) {
+        showAlert("Registration failed. Please try again.", "error");
+    } else if (params.has("success")) {
+        showAlert("Account created successfully!", "success");
     }
+});
 
-    // Add CSS animations for toast
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes slideInRight {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-        @keyframes slideOutRight {
-            from {
-                transform: translateX(0);
-                opacity: 1;
-            }
-            to {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-        }
-    `;
-    document.head.appendChild(style);
+// --- CUSTOM ALERT FUNCTION ---
+function showAlert(message, type) {
+    const alertBox = document.createElement("div");
+    alertBox.className = `custom-alert ${type}`;
+    alertBox.textContent = message;
+    document.body.appendChild(alertBox);
 
-    // Add focus animations
-    const formInputs = document.querySelectorAll('.form-control, .form-select');
-    formInputs.forEach(input => {
-        input.addEventListener('focus', function() {
-            this.style.transform = 'scale(1.01)';
-            this.style.transition = 'transform 0.2s ease';
-        });
+    setTimeout(() => alertBox.classList.add("visible"), 50);
+    setTimeout(() => {
+        alertBox.classList.remove("visible");
+        setTimeout(() => alertBox.remove(), 300);
+    }, 3500);
+}
 
-        input.addEventListener('blur', function() {
-            this.style.transform = 'scale(1)';
-        });
-    });
+// Real-time validation feedback
+document.addEventListener("DOMContentLoaded", function() {
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
 
-    // Handle server-side validation errors (if any exist on page load)
-    const errorMessages = document.querySelectorAll('.error-message');
-    if (errorMessages.length > 0) {
-        errorMessages.forEach(error => {
-            const input = error.previousElementSibling;
-            if (input && input.classList.contains('form-control')) {
-                input.classList.add('is-invalid');
+    // Email validation on blur
+    if (emailInput) {
+        emailInput.addEventListener("blur", function() {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const emailError = document.getElementById("emailError");
+
+            if (this.value && !emailRegex.test(this.value)) {
+                if (emailError) emailError.textContent = "Please enter a valid email address.";
+                this.classList.add("input-error");
+            } else {
+                if (emailError) emailError.textContent = "";
+                this.classList.remove("input-error");
             }
         });
     }
 
-    // Console welcome message
-    console.log('%c Welcome to PaperHub Registration! ',
-        'background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%); color: white; font-size: 16px; padding: 8px; border-radius: 4px;'
-    );
+    // Password strength indicator
+    if (passwordInput) {
+        passwordInput.addEventListener("input", function() {
+            const value = this.value;
+            let strengthText = "";
+            let color = "";
+
+            if (value.length === 0) {
+                strengthText = "";
+            } else if (value.length < 6) {
+                strengthText = "Weak password";
+                color = "#e53e3e";
+            } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(value)) {
+                strengthText = "Medium password";
+                color = "#dd6b20";
+            } else {
+                strengthText = "Strong password";
+                color = "#38a169";
+            }
+
+            // Remove existing strength indicator
+            const existingStrength = this.parentElement.querySelector(".password-strength");
+            if (existingStrength) {
+                existingStrength.remove();
+            }
+
+            // Add new strength indicator
+            if (strengthText) {
+                const strength = document.createElement("div");
+                strength.textContent = strengthText;
+                strength.style.color = color;
+                strength.className = "password-strength";
+                this.parentElement.appendChild(strength);
+            }
+        });
+    }
 });
