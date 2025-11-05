@@ -1,7 +1,5 @@
 package com.alpms.al_paper_management.papers.model;
 
-
-
 import com.alpms.al_paper_management.subjects.model.Subject;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
