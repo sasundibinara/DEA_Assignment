@@ -10,3 +10,4 @@ public interface SubmissionRepository extends JpaRepository<Submission, Long> {
 
     List<Submission> findByExamSession(ExamSession examSession);
 }
+
