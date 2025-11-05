@@ -14,7 +14,7 @@
             --card-radius: 18px;
             --sidebar-width: 240px;
             --primary: #5b5ef7;
-            --primary-soft: rgba(91, 94, 247, 0.15);
+            --primary-soft: rgb(25, 25, 64);
             --text-main: #1f2341;
             --text-muted: #7c7f9a;
             --danger: #ff4d4f;
@@ -65,6 +65,8 @@
             border-radius: 12px;
             object-fit: cover;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+            background: #ffffff;
+            padding: 4px;
         }
 
         .logo-text-title {
@@ -397,7 +399,7 @@
         <!-- replace logo.png with your actual file in /static/images -->
         <img th:src="@{/images/logo.png}" alt="Logo">
         <div>
-            <div class="logo-text-title">AL Paper Management</div>
+            <div class="logo-text-title">A/L Paper Management System</div>
             <div class="logo-text-sub">Admin Dashboard</div>
         </div>
     </div>
@@ -456,7 +458,7 @@
 <main class="main">
     <header class="top-bar">
         <div class="top-bar-left">
-            <h1>Welcome back, <span th:text="${adminName} ?: 'Admin'">Admin</span> 👋</h1>
+            <h1>Welcome back, <span th:text="${adminName} ?: 'Admin'">Admin</span> </h1>
             <p>Here’s a quick overview of activity across papers, exams and users.</p>
         </div>
         <div class="top-bar-right">
