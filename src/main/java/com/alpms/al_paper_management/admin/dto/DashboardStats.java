@@ -1,6 +1,5 @@
 package com.alpms.al_paper_management.admin.dto;
 
-
 public class DashboardStats {
 
     private long totalPapers;
@@ -31,3 +30,4 @@ public class DashboardStats {
         return totalUsers;
     }
 }
+
