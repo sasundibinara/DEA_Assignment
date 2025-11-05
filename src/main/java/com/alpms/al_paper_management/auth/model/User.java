@@ -30,10 +30,50 @@ public class User {
     @Column(nullable = false, length = 20)
     private Role role = Role.STUDENT;
 
+    private String grade;
+
+    private String stream;
+
+    private String avatarPath;
+
+    private String phone;
+
     @Column(nullable = false)
     private boolean enabled = true;
 
     public enum Role { ADMIN, TEACHER, STUDENT }
+
+    // path to stored profile image (in /uploads)
+    private String profileImagePath;
+
+    // === getters & setters for new fields ===
+    public String getFullName() {
+        return fullName;
+    }
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getStream() {
+        return stream;
+    }
+    public void setStream(String stream) {
+        this.stream = stream;
+    }
+
+    public String getProfileImagePath() {
+        return profileImagePath;
+    }
+    public void setProfileImagePath(String profileImagePath) {
+        this.profileImagePath = profileImagePath;
+    }
 
     public Collection<? extends GrantedAuthority> authorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
