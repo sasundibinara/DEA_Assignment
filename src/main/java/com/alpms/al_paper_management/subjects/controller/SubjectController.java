@@ -1,6 +1,5 @@
 package com.alpms.al_paper_management.subjects.controller;
 
-
 import com.alpms.al_paper_management.subjects.model.Subject;
 import com.alpms.al_paper_management.subjects.service.SubjectService;
 import jakarta.validation.Valid;
