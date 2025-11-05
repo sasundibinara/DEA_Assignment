@@ -1,6 +1,5 @@
 package com.alpms.al_paper_management.config;
 
-
 import com.alpms.al_paper_management.auth.model.User;
 import com.alpms.al_paper_management.auth.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
@@ -44,10 +43,12 @@ public class SecurityConfig {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/auth/**", "/css/**", "/js/**").permitAll()
+                        .requestMatchers("/", "/auth/**", "/css/**", "/js/**","/images/**").permitAll()
                         .requestMatchers("/papers", "/papers/").authenticated()          // list
                         .requestMatchers("/papers/upload", "/papers/{id}/delete", "/papers").hasAnyRole("ADMIN","TEACHER")
                         .requestMatchers("/subjects/**").hasAnyRole("ADMIN","TEACHER")
+                        .requestMatchers("/student/**").authenticated()
+
                         .anyRequest().authenticated()
                 )
 
