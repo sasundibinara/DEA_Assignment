@@ -58,11 +58,11 @@ public class SubmissionService {
     }
 
     // 🔹 Update score (marking)
-    public void updateScore(Long submissionId, Double score) {
+    public Submission updateScore(Long submissionId, Double score) {
         Submission sub = submissions.findById(submissionId)
                 .orElseThrow(() -> new EntityNotFoundException("Submission not found: " + submissionId));
         sub.setScore(score);
-        submissions.save(sub);
+        return submissions.save(sub);
     }
 
     // 🔹 Delete submission

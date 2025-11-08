@@ -8,14 +8,13 @@
 
 body {
     height: 100vh;
-    background: linear-gradient(135deg, #1e3a8a, #3b82f6, #60a5fa);
+    background: linear-gradient(135deg, #1a1c2c, #3a0ca3, #4361ee);
     background-size: 200% 200%;
     animation: gradientMove 8s ease infinite;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #fff;
-    overflow: hidden;
 }
 
 @keyframes gradientMove {
@@ -27,192 +26,80 @@ body {
 /* Container */
 .login-container {
     display: flex;
-    width: 90%;
-    max-width: 1200px;
-    height: 85vh;
-    max-height: 700px;
-    background: #fff;
-    border-radius: 24px;
-    overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+/* Card */
+.login-card {
+    width: 380px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 40px 30px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(12px);
+    text-align: center;
     animation: fadeIn 1s ease;
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: scale(0.95);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-/* Left Side - Illustration */
-.illustration-section {
-    flex: 1;
-    background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
-    padding: 40px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    position: relative;
-    overflow: hidden;
-}
-
-/* Decorative circles */
-.illustration-section::before {
-    content: '';
-    position: absolute;
-    width: 200px;
-    height: 200px;
-    background: rgba(59, 130, 246, 0.1);
-    border-radius: 50%;
-    top: -50px;
-    left: -50px;
-}
-
-.illustration-section::after {
-    content: '';
-    position: absolute;
-    width: 150px;
-    height: 150px;
-    background: rgba(59, 130, 246, 0.08);
-    border-radius: 50%;
-    bottom: 100px;
-    right: -30px;
-}
-
-.university-logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    z-index: 1;
-}
-
-.university-logo img {
-    width: 60px;
-    height: 60px;
-    object-fit: contain;
-}
-
-.university-name {
-    color: #1e40af;
-    font-size: 0.95rem;
-    font-weight: 600;
-    line-height: 1.3;
-}
-
-.illustration-wrapper {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1;
-    margin: 20px 0;
-}
-
-.illustration-img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.1));
-}
-
-.footer-info {
-    font-size: 0.75rem;
-    color: #3b82f6;
-    z-index: 1;
-}
-
-/* Right Side - Login Form */
-.form-section {
-    flex: 1;
-    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #3b82f6 100%);
-    padding: 50px 60px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    position: relative;
-}
-
-/* Decorative elements on form side */
-.form-section::before {
-    content: '';
-    position: absolute;
-    width: 300px;
-    height: 300px;
-    background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
-    border-radius: 50%;
-    top: -100px;
-    right: -100px;
-}
-
-.login-card {
-    width: 100%;
-    max-width: 400px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 /* Logo */
 .logo {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 12px;
-    justify-content: flex-start;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
 }
 
-.logo-img {
-    width: 60px;
-    height: 60px;
-    object-fit: contain;
-    border-radius: 8px;
+.logo-icon {
+    font-size: 2.2rem;
+    background: linear-gradient(135deg, #4cc9f0, #7209b7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .logo h2 {
-    font-size: 1.2rem;
-    letter-spacing: 0.3px;
+    margin-top: 8px;
+    font-size: 1.3rem;
+    letter-spacing: 0.5px;
     color: #f1f5f9;
-    font-weight: 600;
 }
 
 /* Headings */
 h3 {
     margin-bottom: 8px;
-    font-size: 2rem;
+    font-size: 1.4rem;
     color: #e0e7ff;
-    font-weight: 600;
 }
 
 .subtitle {
     font-size: 0.9rem;
     color: #cbd5e1;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
 }
 
 /* Inputs */
 .input-group {
     text-align: left;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
     position: relative;
 }
 
 .input-group label {
     font-size: 0.85rem;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     display: block;
     color: #dbeafe;
-    font-weight: 400;
 }
 
-.input-group input,
-.input-group select {
+.input-group input {
     width: 100%;
-    padding: 12px 14px;
+    padding: 10px 14px;
     border-radius: 8px;
     border: none;
     background: rgba(255, 255, 255, 0.15);
@@ -221,17 +108,12 @@ h3 {
     transition: all 0.2s ease;
 }
 
-.input-group input::placeholder {
-    color: rgba(249, 250, 251, 0.5);
-}
-
-.input-group input:focus,
-.input-group select:focus {
-    outline: 1px solid #93c5fd;
+.input-group input:focus {
+    outline: 1px solid #a5b4fc;
     background: rgba(255, 255, 255, 0.2);
 }
 
-/* Password wrapper */
+/* Password wrapper (for icon inside input) */
 .password-wrapper {
     position: relative;
 }
@@ -246,35 +128,15 @@ h3 {
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
-    color: #93c5fd;
+    color: #a5b4fc;
     font-size: 1rem;
-}
-
-/* Select dropdown */
-select {
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 1rem center;
-    background-size: 1rem;
-    cursor: pointer;
-}
-
-select option {
-    background-color: #2563eb;
-    color: #fff;
-}
-
-select option:hover,
-select option:checked {
-    background-color: #1e3a8a;
 }
 
 /* Error styles */
 .error-message {
     margin-top: 4px;
     font-size: 0.78rem;
-    color: #fecaca;
+    color: #fecaca; /* light red */
 }
 
 .input-error {
@@ -288,18 +150,16 @@ select option:checked {
     padding: 12px;
     border: none;
     border-radius: 8px;
-    background: linear-gradient(135deg, #3b82f6, #60a5fa);
+    background: linear-gradient(135deg, #3b82f6, #6366f1);
     color: white;
     font-weight: 600;
     cursor: pointer;
     transition: transform 0.2s ease, background 0.3s;
-    margin-top: 10px;
 }
 
 .btn-login:hover {
     transform: translateY(-2px);
-    background: linear-gradient(135deg, #2563eb, #3b82f6);
-    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+    background: linear-gradient(135deg, #4f46e5, #3b82f6);
 }
 
 /* Footer */
@@ -307,7 +167,6 @@ select option:checked {
     margin-top: 20px;
     font-size: 0.9rem;
     color: #cbd5e1;
-    text-align: center;
 }
 
 .footer-text a {
@@ -318,6 +177,22 @@ select option:checked {
 
 .footer-text a:hover {
     text-decoration: underline;
+}
+
+.input-group select {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: none;
+    background: rgba(255, 255, 255, 0.15);
+    color: #f9fafb;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+.input-group select:focus {
+    outline: 1px solid #a5b4fc;
+    background: rgba(255, 255, 255, 0.2);
 }
 
 /* Alert Box */
@@ -348,19 +223,42 @@ select option:checked {
     opacity: 1;
     transform: translateY(0);
 }
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
 
-/* Responsive */
-@media (max-width: 968px) {
-    .illustration-section {
-        display: none;
-    }
+.logo-img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    border-radius: 8px;
+}
 
-    .login-container {
-        width: 95%;
-        max-width: 500px;
-    }
+select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    font-size: 1rem;
+    background-color: #5c2be0;
+    color: #fff;
+    appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24'><path d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1rem;
+}
 
-    .form-section {
-        padding: 40px 30px;
-    }
+select option {
+    background-color: #5c2be0;
+    color: #fff;
+}
+
+select option:hover,
+select option:checked {
+    background-color: #3a139a;
 }
