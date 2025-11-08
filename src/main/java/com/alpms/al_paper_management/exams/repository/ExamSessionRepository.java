@@ -14,4 +14,3 @@ public interface ExamSessionRepository extends JpaRepository<ExamSession, Long> 
     // for dashboard counter
     long countByExamDateAfter(LocalDate date);
 }
-

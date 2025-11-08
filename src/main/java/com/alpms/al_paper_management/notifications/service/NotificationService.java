@@ -1,4 +1,4 @@
-package com.alpms.al_paper_management.notification.service;
+package com.alpms.al_paper_management.notifications.service;
 
 import com.alpms.al_paper_management.auth.model.User;
 import com.alpms.al_paper_management.notifications.model.Notification;
@@ -28,4 +28,3 @@ public class NotificationService {
         return notifications.save(n);
     }
 }
-
