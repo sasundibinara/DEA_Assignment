@@ -1,88 +1,46 @@
 package com.alpms.al_paper_management.exams.model;
 
-import com.alpms.al_paper_management.exams.model.ExamSession;
-import com.alpms.al_paper_management.exams.service.ExamSessionService;
-import com.alpms.al_paper_management.subjects.service.SubjectService;
 import com.alpms.al_paper_management.subjects.model.Subject;
-import jakarta.persistence.EntityNotFoundException;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-@Controller
-@RequestMapping("/exams")
-public class ExamSessionController {
+@Entity
+@Table(name = "exam_sessions")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class ExamSession {
 
-    private final ExamSessionService examSessionService;
-    private final SubjectService subjectService;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    public ExamSessionController(ExamSessionService examSessionService,
-                                 SubjectService subjectService) {
-        this.examSessionService = examSessionService;
-        this.subjectService = subjectService;
-    }
+    // e.g. "2025 A/L Physics Paper Discussion"
+    @Column(nullable = false)
+    private String title;
 
-    // 🔹 List all exams
-    @GetMapping
-    public String list(Model model) {
-        model.addAttribute("exams", examSessionService.findAll());
-        return "exams/list";
-    }
+    // Date of the exam / session
+    private LocalDate examDate;
 
-    // 🔹 Show create form
-    @GetMapping("/create")
-    public String showCreateForm(Model model) {
-        model.addAttribute("exam", new ExamSession());
-        model.addAttribute("subjects", subjectService.findAll());
-        return "exams/create";
-    }
+    // Start time (optional)
+    private LocalTime startTime;
 
-    // 🔹 Handle create / save
-    @PostMapping
-    public String create(@RequestParam String title,
-                         @RequestParam(required = false) Long subjectId,
-                         @RequestParam(required = false) String examDate,   // "yyyy-MM-dd"
-                         @RequestParam(required = false) String startTime,  // "HH:mm"
-                         @RequestParam(required = false) Integer durationMinutes,
-                         @RequestParam(required = false) String description) {
+    // Duration in minutes (optional)
+    private Integer durationMinutes;
 
-        ExamSession.ExamSessionBuilder builder = ExamSession.builder()
-                .title(title)
-                .description(description)
-                .durationMinutes(durationMinutes);
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "subject_id")
+    private Subject subject;
 
-        if (examDate != null && !examDate.isBlank()) {
-            builder.examDate(LocalDate.parse(examDate));
-        }
-        if (startTime != null && !startTime.isBlank()) {
-            builder.startTime(LocalTime.parse(startTime));
-        }
-        if (subjectId != null) {
-            Subject subject = subjectService.get(subjectId); // assuming you have get() in SubjectService
-            builder.subject(subject);
-        }
+    @Column(length = 1000)
+    private String description;
 
-        examSessionService.save(builder.build());
-        return "redirect:/exams";
-    }
-
-    // 🔹 Delete exam
-    @PostMapping("/{id}/delete")
-    public String delete(@PathVariable Long id) {
-        examSessionService.delete(id);
-        return "redirect:/exams";
-    }
-
-    // 🔹 View single exam details (optional, if you have exams/details.html)
-    @GetMapping("/{id}")
-    public String details(@PathVariable Long id, Model model) {
-        ExamSession exam = examSessionService.findById(id);
-        model.addAttribute("exam", exam);
-        return "exams/details"; // create this if you need
-    }
-
-
+    // Whether this exam is active / upcoming
+    @Builder.Default
+    private boolean active = true;
 }

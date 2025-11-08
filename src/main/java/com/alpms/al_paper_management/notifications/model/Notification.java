@@ -1,4 +1,4 @@
-package com.alpms.al_paper_management.notification.model;
+package com.alpms.al_paper_management.notifications.model;
 
 import com.alpms.al_paper_management.auth.model.User;
 import jakarta.persistence.*;
@@ -36,4 +36,3 @@ public class Notification {
         }
     }
 }
-
