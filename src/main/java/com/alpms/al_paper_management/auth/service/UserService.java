@@ -118,4 +118,3 @@ public class UserService {
         return "/uploads/avatars/" + filename;
     }
 }
-
