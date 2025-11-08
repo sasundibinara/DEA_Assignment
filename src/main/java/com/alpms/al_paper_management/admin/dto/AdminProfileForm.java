@@ -1,7 +1,5 @@
 package com.alpms.al_paper_management.admin.dto;
 
-package com.alpms.al_paper_management.admin.dto;
-
 public class AdminProfileForm {
 
     private String fullName;
