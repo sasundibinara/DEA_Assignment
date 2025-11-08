@@ -88,6 +88,10 @@ public class PaperService {
                 PageRequest.of(0, limit, Sort.by(Sort.Direction.DESC, "id"))
         ).getContent();
     }
+    // 🔹 subject-specific list (for student subject view)
+    public List<Paper> findBySubject(Long subjectId) {
+        return papers.findBySubjectIdOrderByYearDesc(subjectId);
+    }
 
 
 

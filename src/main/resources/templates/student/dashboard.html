@@ -1,0 +1,818 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Dashboard | AL Paper Management</title>
+    <link rel="icon" th:href="@{/images/logo.png}">
+    <style>
+        :root {
+            --bg: #f3f4f6;
+            --bg-elevated: #ffffff;
+            --bg-soft: #e5e7eb;
+            --accent: #2563eb;
+            --accent-strong: #1d4ed8;
+            --accent-soft: rgba(37, 99, 235, 0.12);
+            --text-main: #111827;
+            --text-muted: #6b7280;
+            --border-subtle: rgba(15, 23, 42, 0.08);
+            --radius-lg: 12px;
+            --radius-md: 8px;
+            --shadow-soft: 0 10px 25px rgba(15, 23, 42, 0.06);
+            --shadow-subtle: 0 4px 12px rgba(15, 23, 42, 0.06);
+            --success: #16a34a;
+            --warning: #f59e0b;
+            --info: #0ea5e9;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: var(--bg);
+            color: var(--text-main);
+        }
+
+        a { color: inherit; text-decoration: none; }
+
+        /* NAVBAR (reuse style from index concept) */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.6rem 1.6rem;
+            background: var(--bg-elevated);
+            border-bottom: 1px solid var(--border-subtle);
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .navbar-left {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .brand-logo {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+            gap: 0.1rem;
+        }
+
+        .brand-title {
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            font-size: 0.95rem;
+        }
+
+        .brand-subtitle {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .navbar-center {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .nav-link {
+            padding: 0.35rem 0.8rem;
+            border-radius: 999px;
+            font-size: 0.86rem;
+            color: var(--text-muted);
+            transition: background 0.18s ease-out, color 0.18s ease-out, transform 0.18s ease-out;
+        }
+
+        .nav-link:hover {
+            background: rgba(15, 23, 42, 0.04);
+            color: var(--text-main);
+            transform: translateY(-1px);
+        }
+
+        .nav-link.active {
+            background: var(--accent);
+            color: #ffffff;
+            box-shadow: 0 6px 14px rgba(37, 99, 235, 0.28);
+        }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .user-mini {
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+        }
+
+        .user-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--accent-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: var(--accent-strong);
+            font-size: 0.82rem;
+            overflow: hidden;
+        }
+
+        .user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .user-name {
+            font-size: 0.86rem;
+        }
+
+        .user-role {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+        }
+
+        .btn-logout {
+            background: #ffffff;
+            border-radius: 999px;
+            border: 1px solid var(--border-subtle);
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            padding: 0.35rem 0.8rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: all 0.18s ease-out;
+        }
+
+        .btn-logout:hover {
+            background: rgba(15, 23, 42, 0.04);
+            color: var(--text-main);
+        }
+
+        /* MAIN WRAPPER */
+        .main {
+            padding: 1.5rem 1.8rem 2.2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* TOP HEADER */
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            gap: 1.5rem;
+            align-items: flex-start;
+            margin-bottom: 1.4rem;
+        }
+
+        .topbar-kicker {
+            font-size: 0.78rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin: 0 0 0.3rem;
+        }
+
+        .topbar-title {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .topbar-subtitle {
+            margin-top: 0.4rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .topbar-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+        }
+
+        .btn-primary, .btn-outline {
+            border-radius: 999px;
+            padding: 0.46rem 1.1rem;
+            font-size: 0.84rem;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-strong);
+        }
+
+        .btn-outline {
+            background: #ffffff;
+            border: 1px solid var(--border-subtle);
+            color: var(--text-main);
+        }
+
+        .btn-outline:hover {
+            background: rgba(15, 23, 42, 0.04);
+        }
+
+        /* GRID UTILS */
+        .grid { display: grid; gap: 1rem; }
+        .summary-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .layout-2col { grid-template-columns: minmax(0, 2fr) minmax(0, 1.6fr); }
+        .layout-3col { grid-template-columns: 1.5fr 2fr 1.4fr; }
+
+        /* CARD */
+        .card {
+            background: var(--bg-elevated);
+            border-radius: var(--radius-lg);
+            padding: 1rem 1.1rem;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .card-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-label {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+        }
+
+        .card-value {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-top: 0.28rem;
+        }
+
+        .card-note {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.4rem;
+        }
+
+        .card-pill {
+            padding: 0.18rem 0.6rem;
+            border-radius: 999px;
+            font-size: 0.72rem;
+            background: rgba(15, 23, 42, 0.04);
+            color: var(--text-muted);
+        }
+
+        /* SECTION TITLE */
+        .section-title {
+            font-size: 0.98rem;
+            margin: 0;
+            font-weight: 600;
+        }
+
+        /* TABLE */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0.4rem;
+            font-size: 0.82rem;
+        }
+
+        .table thead {
+            background: var(--bg-soft);
+        }
+
+        .table th,
+        .table td {
+            padding: 0.45rem 0.5rem;
+            text-align: left;
+        }
+
+        .table th {
+            font-weight: 500;
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .table tbody tr:nth-child(odd) {
+            background: #f9fafb;
+        }
+
+        .table tbody tr:hover {
+            background: #eef2ff;
+        }
+
+        .table-title { font-weight: 500; }
+
+        .table-empty {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            padding: 0.7rem 0.5rem;
+        }
+
+        /* BADGES */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.14rem 0.55rem;
+            border-radius: 999px;
+            font-size: 0.7rem;
+            background: rgba(15, 23, 42, 0.04);
+            color: var(--text-muted);
+        }
+
+        .badge-success {
+            background: rgba(22, 163, 74, 0.12);
+            color: var(--success);
+        }
+
+        .badge-warning {
+            background: rgba(245, 158, 11, 0.12);
+            color: var(--warning);
+        }
+
+        .badge-info {
+            background: rgba(14, 165, 233, 0.12);
+            color: var(--info);
+        }
+
+        /* SUBJECT CHIPS */
+        .chip-list {
+            list-style: none;
+            padding: 0;
+            margin: 0.5rem 0 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+        }
+
+        .chip {
+            background: #f3f4f6;
+            border-radius: 999px;
+            padding: 0.24rem 0.6rem;
+            font-size: 0.78rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        .chip:hover {
+            border-color: var(--accent-soft);
+            background: #eef2ff;
+        }
+
+        .chip-code {
+            font-weight: 600;
+            color: var(--accent-strong);
+        }
+
+        .chip-empty { color: var(--text-muted); }
+
+        /* TIMELINE */
+        .timeline {
+            list-style: none;
+            padding: 0;
+            margin: 0.6rem 0 0;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: "";
+            position: absolute;
+            left: 0.55rem;
+            top: 0.2rem;
+            bottom: 0.3rem;
+            width: 1px;
+            background: var(--border-subtle);
+        }
+
+        .timeline li {
+            display: flex;
+            gap: 0.6rem;
+            padding-left: 1.15rem;
+            margin-bottom: 0.7rem;
+        }
+
+        .timeline-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--accent-strong);
+            margin-top: 0.3rem;
+        }
+
+        .timeline-body {
+            font-size: 0.78rem;
+        }
+
+        .timeline-title {
+            font-weight: 500;
+        }
+
+        .timeline-text {
+            color: var(--text-muted);
+            margin-top: 0.1rem;
+        }
+
+        .timeline-meta {
+            margin-top: 0.18rem;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        .timeline-empty {
+            padding-left: 1.15rem;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        /* FOOTER */
+        .footer {
+            border-top: 1px solid var(--border-subtle);
+            padding: 1rem 1.8rem 1.2rem;
+            margin-top: auto;
+            background: #f9fafb;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .footer-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 960px) {
+            .navbar-center {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main {
+                padding: 1rem 1rem 1.8rem;
+            }
+            .topbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .summary-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+            .layout-2col,
+            .layout-3col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+            .navbar {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+    <div class="navbar-left">
+        <img th:src="@{/images/logo.png}" alt="Logo" class="brand-logo">
+        <div class="brand-text">
+            <span class="brand-title">ALHORIZON</span>
+            <span class="brand-subtitle">Student Portal</span>
+        </div>
+    </div>
+
+    <nav class="navbar-center">
+        <a th:href="@{/}" class="nav-link">Home</a>
+        <a th:href="@{/student/dashboard}" class="nav-link active">Dashboard</a>
+        <a th:href="@{/subjects}" class="nav-link">Subjects</a>
+        <a th:href="@{/papers}" class="nav-link">All Papers</a>
+        <a th:href="@{/student/profile}" class="nav-link">My Profile</a>
+    </nav>
+
+    <div class="navbar-right">
+        <div class="user-mini">
+            <div class="user-avatar">
+                <!-- show avatar if available, otherwise first letter -->
+                <img th:if="${student?.avatarPath != null}"
+                     th:src="@{/${student.avatarPath}}"
+                     alt="Avatar">
+                <span th:if="${student?.avatarPath == null}"
+                      th:text="${#strings.substring(student?.fullName != null ? student.fullName : #authentication.name,0,1)}">S</span>
+            </div>
+            <div>
+                <div class="user-name"
+                     th:text="${student?.fullName} ?: ${#authentication.name}">Student Name</div>
+                <div class="user-role">Student</div>
+            </div>
+        </div>
+
+        <form th:action="@{/logout}" method="post" id="logoutForm">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <button type="button" class="btn-logout" onclick="submitLogout()">
+                ⎋ Logout
+            </button>
+        </form>
+    </div>
+</header>
+
+<!-- MAIN -->
+<main class="main">
+
+    <!-- TOPBAR -->
+    <section class="topbar">
+        <div>
+            <p class="topbar-kicker">Student dashboard</p>
+            <h1 class="topbar-title">
+                Welcome,
+                <span th:text="${student?.fullName} ?: ${#authentication.name}">Student</span>
+            </h1>
+            <p class="topbar-subtitle">
+                Quickly access your subjects, recent papers and upcoming exams.
+            </p>
+        </div>
+        <div class="topbar-actions">
+            <button class="btn-primary" type="button"
+                    onclick="location.href='/subjects'">
+                Browse Subjects
+            </button>
+            <button class="btn-outline" type="button"
+                    onclick="location.href='/student/profile'">
+                View Profile
+            </button>
+        </div>
+    </section>
+
+    <!-- SUMMARY CARDS -->
+    <section class="grid summary-grid" style="margin-bottom:1.1rem;">
+        <article class="card">
+            <div class="card-header">
+                <div>
+                    <div class="card-label">Subjects</div>
+                    <div class="card-value"
+                         th:text="${#lists.size(subjects)} ?: 0">0</div>
+                </div>
+                <span class="card-pill">You’re enrolled</span>
+            </div>
+            <p class="card-note">
+                Click a subject chip below to view its related papers.
+            </p>
+        </article>
+
+        <article class="card">
+            <div class="card-header">
+                <div>
+                    <div class="card-label">Recent Papers</div>
+                    <div class="card-value"
+                         th:text="${#lists.size(recentPapers)} ?: 0">0</div>
+                </div>
+                <span class="card-pill">Last uploads</span>
+            </div>
+            <p class="card-note">
+                Recently added papers for revision and practice.
+            </p>
+        </article>
+
+        <article class="card">
+            <div class="card-header">
+                <div>
+                    <div class="card-label">Upcoming Exams</div>
+                    <div class="card-value"
+                         th:text="${#lists.size(upcomingExams)} ?: 0">0</div>
+                </div>
+                <span class="card-pill">Check dates</span>
+            </div>
+            <p class="card-note">
+                Keep an eye on exam dates and plan your revision.
+            </p>
+        </article>
+    </section>
+
+    <!-- MAIN GRID (2 columns) -->
+    <section class="grid layout-2col" style="margin-bottom:1.1rem;">
+        <!-- LEFT: RECENT PAPERS -->
+        <article class="card">
+            <div class="card-header-row">
+                <h2 class="section-title">Recent Papers</h2>
+                <button class="btn-outline" type="button"
+                        onclick="location.href='/papers'">
+                    View all papers
+                </button>
+            </div>
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Subject</th>
+                    <th>Year</th>
+                    <th>Type</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="p : ${recentPapers}"
+                    th:onclick="|window.location='/student/subjects/' + ${p.subject.id} + '/papers'|"
+                    style="cursor:pointer;">
+                    <td class="table-title" th:text="${p.title}">Paper title</td>
+                    <td th:text="${p.subject.name}">Physics</td>
+                    <td th:text="${p.year}">2024</td>
+                    <td th:text="${p.type}">PAST</td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(recentPapers)}">
+                    <td colspan="4" class="table-empty">
+                        No recent papers found. Check with your teacher or try again later.
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </article>
+
+        <!-- RIGHT: UPCOMING EXAMS -->
+        <article class="card">
+            <div class="card-header-row">
+                <h2 class="section-title">Upcoming Exams</h2>
+            </div>
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Date</th>
+                    <th>Session</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="e : ${upcomingExams}">
+                    <td th:text="${e.subject.name}">Chemistry</td>
+                    <td th:text="${#temporals.format(e.examDate, 'yyyy-MM-dd')}">2025-02-14</td>
+                    <td th:text="${e.sessionType}">Term Test</td>
+                    <td>
+                        <span class="badge"
+                              th:classappend="${e.active} ? ' badge-success' : ' badge-warning'"
+                              th:text="${e.active} ? 'Open' : 'Closed'">
+                            Open
+                        </span>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(upcomingExams)}">
+                    <td colspan="4" class="table-empty">
+                        No upcoming exams scheduled at the moment.
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </article>
+    </section>
+
+    <!-- BOTTOM GRID (subjects + notifications + maybe info) -->
+    <section class="grid layout-3col">
+        <!-- SUBJECT CHIPS -->
+        <article class="card">
+            <div class="card-header-row">
+                <h2 class="section-title">Your Subjects</h2>
+            </div>
+            <ul class="chip-list">
+                <li th:each="s : ${subjects}" class="chip"
+                    th:onclick="|window.location='/student/subjects/' + ${s.id} + '/papers'|">
+                    <span class="chip-code" th:text="${s.code}">PHY</span>
+                    <span th:text="${s.name}">Physics</span>
+                </li>
+                <li th:if="${#lists.isEmpty(subjects)}"
+                    class="chip chip-empty">
+                    No subjects assigned yet.
+                </li>
+            </ul>
+        </article>
+
+        <!-- NOTIFICATIONS -->
+        <article class="card">
+            <div class="card-header-row">
+                <h2 class="section-title">Notifications</h2>
+                <span class="badge badge-info"
+                      th:text="${#lists.size(notifications)} ?: 0">0</span>
+            </div>
+            <ul class="timeline">
+                <li th:each="n : ${notifications}">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-body">
+                        <div class="timeline-title"
+                             th:text="${n.title}">New paper uploaded</div>
+                        <div class="timeline-text"
+                             th:text="${n.message}">
+                            Your teacher uploaded a new Physics paper.
+                        </div>
+                        <div class="timeline-meta"
+                             th:text="${#temporals.format(n.createdAt, 'MMM d, HH:mm')}">
+                            Feb 03, 09:30
+                        </div>
+                    </div>
+                </li>
+                <li th:if="${#lists.isEmpty(notifications)}" class="timeline-empty">
+                    No new notifications.
+                </li>
+            </ul>
+        </article>
+
+        <!-- INFO / TIPS -->
+        <article class="card">
+            <h2 class="section-title">Study Tips</h2>
+            <p class="card-note" style="margin-top:0.6rem;">
+                Use past papers to time yourself under exam conditions. After each attempt,
+                compare with the marking scheme and note where you lost marks.
+            </p>
+            <ul style="margin:0.6rem 0 0; padding-left:1rem; font-size:0.8rem; color:var(--text-muted);">
+                <li>Start with subjects that have nearer exam dates.</li>
+                <li>Keep track of which papers you’ve already done.</li>
+                <li>Discuss difficult questions with your teachers and friends.</li>
+            </ul>
+        </article>
+    </section>
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-inner">
+        <div>
+            © <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2025</span>
+            AL Paper Management. All rights reserved.
+        </div>
+        <div class="footer-links">
+            <a th:href="@{/}">Home</a>
+            <a th:href="@{/auth/login}">Login</a>
+            <a th:href="@{/auth/register}">Register</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    function submitLogout() {
+        const form = document.getElementById('logoutForm');
+        if (form) {
+            form.submit();
+        }
+    }
+</script>
+
+</body>
+</html>

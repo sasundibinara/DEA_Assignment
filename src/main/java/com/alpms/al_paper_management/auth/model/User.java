@@ -79,3 +79,4 @@ public class User {
         return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
     }
 }
+

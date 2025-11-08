@@ -1,6 +1,5 @@
 package com.alpms.al_paper_management.exams.service;
 
-
 import com.alpms.al_paper_management.exams.model.ExamSession;
 import com.alpms.al_paper_management.exams.model.Submission;
 import com.alpms.al_paper_management.exams.repository.ExamSessionRepository;
@@ -59,11 +58,11 @@ public class SubmissionService {
     }
 
     // 🔹 Update score (marking)
-    public Submission updateScore(Long submissionId, Double score) {
+    public void updateScore(Long submissionId, Double score) {
         Submission sub = submissions.findById(submissionId)
                 .orElseThrow(() -> new EntityNotFoundException("Submission not found: " + submissionId));
         sub.setScore(score);
-        return submissions.save(sub);
+        submissions.save(sub);
     }
 
     // 🔹 Delete submission
