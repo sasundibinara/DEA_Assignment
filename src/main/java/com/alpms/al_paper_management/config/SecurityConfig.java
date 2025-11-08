@@ -1,5 +1,6 @@
 package com.alpms.al_paper_management.config;
 
+
 import com.alpms.al_paper_management.auth.model.User;
 import com.alpms.al_paper_management.auth.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
@@ -47,6 +48,7 @@ public class SecurityConfig {
                         .requestMatchers("/papers", "/papers/").authenticated()          // list
                         .requestMatchers("/papers/upload", "/papers/{id}/delete", "/papers").hasAnyRole("ADMIN","TEACHER")
                         .requestMatchers("/subjects/**").hasAnyRole("ADMIN","TEACHER")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/student/**").authenticated()
 
                         .anyRequest().authenticated()
