@@ -12,3 +12,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
     // ✅ use the actual field on User: "role"
     long countByRole(User.Role role);
 }
+
