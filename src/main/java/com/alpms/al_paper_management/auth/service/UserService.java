@@ -15,7 +15,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -26,26 +25,16 @@ public class UserService {
         this.users = users;
     }
 
-    /* ---------- STATS FOR ADMIN DASHBOARD ---------- */
-
     public long countAll() {
         return users.count();
     }
 
-    /* ---------- BASIC HELPERS USED BY CONTROLLERS ---------- */
-
-    /** Find any user by email (case-insensitive). */
-    public Optional<User> findByEmail(String email) {
-        return users.findByEmailIgnoreCase(email);
-    }
-
-    /** Save or update a user entity. */
+    // 🔵 NEW: used by StudentController (and others)
     public User save(User user) {
         return users.save(user);
     }
 
-    /* ---------- CURRENT LOGGED-IN USER ---------- */
-
+    // 1) CURRENT LOGGED-IN USER
     public User getCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
@@ -54,16 +43,14 @@ public class UserService {
             throw new IllegalStateException("No authenticated user in context");
         }
 
-        // username == email (default)
-        String email = auth.getName();
+        String email = auth.getName(); // username == email
 
         return users.findByEmailIgnoreCase(email)
                 .orElseThrow(() ->
                         new UsernameNotFoundException("User not found: " + email));
     }
 
-    /* ---------- UPDATE CURRENT STUDENT PROFILE (incl. avatar) ---------- */
-
+    // 2) UPDATE CURRENT STUDENT PROFILE (generic profile update)
     @Transactional
     public void updateCurrentStudentProfile(
             String fullName,
@@ -74,35 +61,28 @@ public class UserService {
 
         User user = getCurrentUser();
 
-        // Adjust these setter names if your User entity uses different field names
         user.setFullName(fullName);
         user.setPhone(phone);
         user.setStream(stream);
 
         if (avatar != null && !avatar.isEmpty()) {
             String avatarPath = storeAvatarFile(user.getId(), avatar);
-            // IMPORTANT: this must match your User entity property name
-            // If your field is called avatarPath:
+            // adjust to your actual field name if different
             user.setAvatarPath(avatarPath);
-            // If instead you renamed it to profileImagePath, use:
-            // user.setProfileImagePath(avatarPath);
         }
 
-        // use our own helper, but this is same as users.save(user)
-        save(user);
+        users.save(user);
     }
 
-    /* ---------- STORE AVATAR FILE ON DISK ---------- */
-
+    // 3) STORE AVATAR FILE ON DISK
     private String storeAvatarFile(Long userId, MultipartFile avatar) throws IOException {
-        // Store in /uploads/avatars relative to the project root
         Path uploadDir = Paths.get("uploads", "avatars");
         Files.createDirectories(uploadDir);
 
         String original = avatar.getOriginalFilename();
         String ext;
         if (original != null && original.contains(".")) {
-            ext = original.substring(original.lastIndexOf('.')); // includes dot
+            ext = original.substring(original.lastIndexOf('.'));
         } else {
             ext = ".png";
         }
@@ -114,7 +94,7 @@ public class UserService {
             Files.copy(in, target, StandardCopyOption.REPLACE_EXISTING);
         }
 
-        // This is what <img th:src="..."> should use
-        return "/uploads/avatars/" + filename;
+        return "/uploads/avatars/" + filename; // web path
     }
 }
+
