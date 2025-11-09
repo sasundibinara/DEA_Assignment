@@ -467,40 +467,65 @@ Content-Type: multipart/form-data
   "title": "2023 Physics Paper",
   "year": 2023,
   "subjectId": 2,
-  "paperType": "PAST_PAPER",
+  "paperType": "PAST",
   "file": <binary>
 }
 ```
 
----
 
-## 📸 Screenshots
+## 🖼️ Application Interfaces
 
-### Landing Page
-![Landing Page](docs/images/landing-page.png)
+### 1️⃣ Landing Page  
+![Landing Page](docs/images/landing-page.png)  
 *Homepage showcasing featured papers and quick navigation*
 
-### Admin Dashboard
-![Admin Dashboard](docs/images/admin-dashboard.png)
+---
+
+### 2️⃣ Admin Dashboard  
+![Admin Dashboard](docs/images/admin-dashboard.png)  
 *Comprehensive admin panel for content and user management*
 
-### Teacher Upload Interface
-![Teacher Upload](docs/images/teacher-upload.png)
-*Intuitive paper upload form for teachers*
+---
 
-### Student Browse Interface
-![Student Browse](docs/images/student-browse.png)
-*Filterable paper library for students*
-
-### Paper Details View
-![Paper Details](docs/images/paper-details.png)
-*Detailed paper information with download option*
-
-### Mobile Responsive View
-![Mobile View](docs/images/mobile-view.png)
-*Fully responsive design for mobile devices*
+### 3️⃣ Admin Profile  
+![Admin Profile](docs/images/admin-profile.png)  
+*Admin personal dashboard with account and management options*
 
 ---
+
+### 4️⃣ Teacher Profile  
+![Teacher Profile](docs/images/teacher-profile.png)  
+*Dedicated teacher profile displaying uploaded papers and stats*
+
+---
+
+### 5️⃣ Student Profile  
+![Student Profile](docs/images/student-profile.png)  
+*Personalized student profile showing downloaded papers and preferences*
+
+---
+
+### 6️⃣ Subjects Details View  
+![Subjects Details](docs/images/subjects-details.png)  
+*Overview of subjects and categorized paper listings*
+
+---
+
+### 7️⃣ Paper Details View  
+![Paper Details](docs/images/paper-details.png)  
+*Detailed information page for each paper with download and preview options*
+
+---
+
+### 8️⃣ Upload Interface  
+![Upload Interface](docs/images/teacher-upload.png)  
+*Simple and intuitive upload form for teachers to submit papers*
+
+---
+
+### 9️⃣ Mobile Responsive View  
+![Mobile View](docs/images/mobile-view.png)  
+*Fully responsive design optimized for smartphones and tablets*
 
 ## 👥 Contributors
 
