@@ -877,7 +877,7 @@
         <a th:href="@{/papers}" class="mobile-nav-link">Papers</a>
         <a th:href="@{/exams}" class="mobile-nav-link">Exams</a>
         <a th:href="@{/subjects}" class="mobile-nav-link">Subjects</a>
-        <a th:href="@{/streams}" class="mobile-nav-link">Streams</a>
+        <!--        <a th:href="@{/streams}" class="mobile-nav-link">Streams</a>-->
         <a th:href="@{/about}" class="mobile-nav-link">About</a>
     </div>
 </nav>
@@ -904,6 +904,41 @@
 =================================== -->
 <div class="streams-section">
     <div class="streams-grid">
+
+        <!-- Technology Stream -->
+        <div class="stream-card technology">
+            <div class="stream-icon">💻</div>
+            <h2 class="stream-title">Technology Stream</h2>
+            <p class="stream-description">
+                Technical and vocational subjects including ICT, engineering technology, and applied sciences with practical exam resources.
+            </p>
+            <div class="stream-subjects">
+                <span class="subjects-label">Key Subjects</span>
+                <div class="subject-tags">
+                    <span class="subject-tag">ICT</span>
+                    <span class="subject-tag">Engineering Tech</span>
+                    <span class="subject-tag">Science for Tech</span>
+                    <span class="subject-tag">Biosystems Tech</span>
+                </div>
+            </div>
+            <div class="stream-stats">
+                <div class="stat-item">
+                    <span class="stat-value">140+</span>
+                    <span class="stat-label">Papers</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">9</span>
+                    <span class="stat-label">Subjects</span>
+                </div>
+            </div>
+            <a th:href="@{/papers/streams/technology}" class="stream-link">
+                View Stream
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </a>
+        </div>
+
         <!-- Science Stream -->
         <div class="stream-card science">
             <div class="stream-icon">🔬</div>
@@ -1039,39 +1074,7 @@
             </a>
         </div>
 
-        <!-- Technology Stream -->
-        <div class="stream-card technology">
-            <div class="stream-icon">💻</div>
-            <h2 class="stream-title">Technology Stream</h2>
-            <p class="stream-description">
-                Technical and vocational subjects including ICT, engineering technology, and applied sciences with practical exam resources.
-            </p>
-            <div class="stream-subjects">
-                <span class="subjects-label">Key Subjects</span>
-                <div class="subject-tags">
-                    <span class="subject-tag">ICT</span>
-                    <span class="subject-tag">Engineering Tech</span>
-                    <span class="subject-tag">Science for Tech</span>
-                    <span class="subject-tag">Biosystems Tech</span>
-                </div>
-            </div>
-            <div class="stream-stats">
-                <div class="stat-item">
-                    <span class="stat-value">140+</span>
-                    <span class="stat-label">Papers</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-value">9</span>
-                    <span class="stat-label">Subjects</span>
-                </div>
-            </div>
-            <a th:href="@{/streams/technology}" class="stream-link">
-                View Stream
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-            </a>
-        </div>
+
     </div>
 </div>
 
