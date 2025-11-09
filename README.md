@@ -9,7 +9,7 @@
   [![Java](https://img.shields.io/badge/Java-17+-orange.svg)](https://www.oracle.com/java/)
   [![MySQL](https://img.shields.io/badge/MySQL-8.0+-blue.svg)](https://www.mysql.com/)
 
-  **A comprehensive Spring Boot web application for managing Advanced Level past papers, notes, and academic resources**
+  **An efficient Spring Boot web application designed to organize and manage Advanced Level past papers and model papers**
 
   [Features](#-key-features) • [Setup](#-installation--setup) • [Usage](#-usage-guide) • [API Documentation](#-api-documentation) • [Contributors](#-contributors)
 
