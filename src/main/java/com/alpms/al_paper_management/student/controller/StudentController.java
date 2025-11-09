@@ -3,22 +3,20 @@ package com.alpms.al_paper_management.student.controller;
 import com.alpms.al_paper_management.auth.model.User;
 import com.alpms.al_paper_management.auth.service.UserService;
 import com.alpms.al_paper_management.student.dto.StudentProfileForm;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Size;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import jakarta.validation.Valid;
-
-import java.security.Principal;
-import java.time.LocalTime;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.Principal;
+import java.time.LocalTime;
 
 @Controller
 @RequestMapping("/student")
@@ -58,15 +56,13 @@ public class StudentController {
         model.addAttribute("studentName", displayName);
         model.addAttribute("student", current);
 
-        // You can add more model attributes later (recommended papers, subjects, etc.)
         return "student/dashboard";
     }
 
     /* ==============================
-       PROFILE FORM DTO
+       (optional) INNER FORM CLASS – you can ignore this, it’s not used
        ============================== */
 
-    // This inner class is used as the form backing object in student/profile.html
     public static class ProfileForm {
 
         @Size(max = 100)
@@ -78,7 +74,6 @@ public class StudentController {
         @Size(max = 60)
         private String stream;
 
-        // getters + setters
         public String getFullName() {
             return fullName;
         }
@@ -94,7 +89,6 @@ public class StudentController {
         public void setPhone(String phone) {
             this.phone = phone;
         }
-
 
         public String getStream() {
             return stream;
@@ -113,9 +107,8 @@ public class StudentController {
     public String showProfile(Model model) {
         User user = userService.getCurrentUser();
 
-        ProfileForm form = new ProfileForm();
-        // These assume you have fields in User: fullName, phone, school, stream.
-        // If some of them don’t exist yet, remove them here and from the HTML.
+        // use your DTO for the form
+        StudentProfileForm form = new StudentProfileForm();
         form.setFullName(user.getFullName());
         form.setPhone(user.getPhone());
         form.setStream(user.getStream());
@@ -135,8 +128,8 @@ public class StudentController {
                                 Principal principal,
                                 RedirectAttributes redirectAttributes) {
 
-        User user = userService.findByEmail(principal.getName())
-                .orElseThrow();
+        // 🔵 FIX: use UserService.getCurrentUser(), no findByEmail
+        User user = userService.getCurrentUser();
 
         // 1) update fields
         user.setFullName(form.getFullName());
@@ -146,7 +139,6 @@ public class StudentController {
         // 2) handle avatar if a file was chosen
         if (avatar != null && !avatar.isEmpty()) {
             try {
-                // folder where you want to store profile images
                 Path uploadDir = Paths.get("uploads/profile");
                 Files.createDirectories(uploadDir);
 
@@ -155,13 +147,12 @@ public class StudentController {
                         ? original.substring(original.lastIndexOf('.'))
                         : ".png";
 
-                // unique filename per user
                 String filename = "user-" + user.getId() + "-" + System.currentTimeMillis() + ext;
 
                 Path target = uploadDir.resolve(filename);
                 avatar.transferTo(target.toFile());
 
-                // save *web* path, NOT absolute file system path
+                // save web path
                 user.setProfileImagePath("uploads/profile/" + filename);
 
             } catch (IOException e) {
