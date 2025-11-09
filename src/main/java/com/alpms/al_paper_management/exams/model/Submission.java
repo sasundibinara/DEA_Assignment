@@ -36,4 +36,3 @@ public class Submission {
 
     private LocalDateTime submittedAt;
 }
-
