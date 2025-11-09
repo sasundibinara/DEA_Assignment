@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin Dashboard | ALHORIZON</title>
-
+    <link rel="icon" th:href="@{/images/logo.png}">
     <!-- Base app styles -->
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
 
@@ -589,6 +589,7 @@
                     <span>Exam Sessions</span>
                 </a>
             </li>
+
         </ul>
 
         <div class="nav-section-title">Users</div>
@@ -623,7 +624,10 @@
         <p>Signed in as <strong th:text="${#authentication?.name}">admin@example.com</strong></p>
         <p style="margin-top:0.4rem;">
             <a th:href="@{/}">Back to site</a> ·
-            <a th:href="@{/auth/login}">Logout</a>
+            <!-- use logout form -->
+            <a href="#" onclick="document.getElementById('adminLogoutForm').submit(); return false;">
+                Logout
+            </a>
         </p>
     </div>
 </aside>
@@ -637,8 +641,14 @@
         </div>
         <div class="top-bar-right">
             <span class="pill">Role: Admin</span>
-            <button class="btn-outline" onclick="location.href='/auth/login'">Logout</button>
 
+            <!-- Logout button submits POST /logout -->
+            <button class="btn-outline" type="button"
+                    onclick="document.getElementById('adminLogoutForm').submit()">
+                Logout
+            </button>
+
+            <!-- Avatar -> profile -->
             <a th:href="@{/admin/profile}" style="text-decoration:none;">
                 <div class="avatar"
                      th:text="${#strings.substring(#authentication?.name,0,1).toUpperCase()}">
@@ -647,6 +657,11 @@
             </a>
         </div>
     </header>
+
+    <!-- Hidden logout form (POST /logout) -->
+    <form th:action="@{/logout}" method="post" id="adminLogoutForm" style="display:none;">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+    </form>
 
     <!-- KPI CARDS -->
     <section class="grid" style="margin-top:0.3rem;">
