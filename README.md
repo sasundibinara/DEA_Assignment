@@ -482,13 +482,13 @@ Content-Type: multipart/form-data
 ---
 
 ### 2️⃣ Admin Dashboard  
-![Admin Dashboard](docs/images/admin-dashboard.png)  
+![Admin Dashboard](src/main/resources/static/images/SS/admin%20dashboard.png)
 *Comprehensive admin panel for content and user management*
 
 ---
 
 ### 3️⃣ Admin Profile  
-![Admin Profile](docs/images/admin-profile.png)  
+![Admin Profile](src/main/resources/static/images/SS/admin%20profile.png) 
 *Admin personal dashboard with account and management options*
 
 ---
@@ -512,7 +512,7 @@ Content-Type: multipart/form-data
 ---
 
 ### 7️⃣ Paper Details View  
-![Paper Details](docs/images/paper-details.png)  
+![Paper Details](src/main/resources/static/images/SS/papers.png) 
 *Detailed information page for each paper with download and preview options*
 
 ---
