@@ -11,3 +11,4 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
     // Recent notifications for a given user
     List<Notification> findTop10ByUserOrderByCreatedAtDesc(User user);
 }
+
