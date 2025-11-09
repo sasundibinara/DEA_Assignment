@@ -23,4 +23,3 @@ public class FileStorageService {
         return dest.toString().replace("\\", "/");
     }
 }
-
