@@ -59,4 +59,3 @@ public class RegistrationForm {
         this.confirmPassword = confirmPassword;
     }
 }
-
