@@ -107,4 +107,9 @@ public class PaperController {
                         "attachment; filename=\"" + path.getFileName() + "\"")
                 .body(resource);
     }
+    @GetMapping("/papers/stream")
+    public String showStreamPage() {
+        return "papers/stream";   // this points to templates/papers/stream.html
+    }
+
 }

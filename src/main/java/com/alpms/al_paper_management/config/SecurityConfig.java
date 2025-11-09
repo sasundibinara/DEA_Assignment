@@ -1,70 +1,77 @@
 package com.alpms.al_paper_management.config;
 
-
-import com.alpms.al_paper_management.auth.model.User;
-import com.alpms.al_paper_management.auth.repository.UserRepository;
+import com.alpms.al_paper_management.config.CustomAuthenticationSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-@EnableMethodSecurity(prePostEnabled = true)
 @Configuration
+@EnableWebSecurity
 public class SecurityConfig {
 
+    private final UserDetailsService userDetailsService;
+    private final CustomAuthenticationSuccessHandler successHandler;
+
+    public SecurityConfig(UserDetailsService userDetailsService,
+                          CustomAuthenticationSuccessHandler successHandler) {
+        this.userDetailsService = userDetailsService;
+        this.successHandler = successHandler;
+    }
+
     @Bean
-    BCryptPasswordEncoder passwordEncoder() {
+    public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    UserDetailsService userDetailsService(UserRepository users) {
-        return username -> {
-            User u = users.findByEmailIgnoreCase(username)
-                    .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-            return new org.springframework.security.core.userdetails.User(
-                    u.getEmail(),
-                    u.getPassword(),
-                    // boolean getter for a boolean field:
-                    u.isEnabled(),
-                    true,
-                    true,
-                    true,
-                    u.authorities()
-            );
-        };
+    public DaoAuthenticationProvider authProvider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(userDetailsService);
+        provider.setPasswordEncoder(passwordEncoder());
+        return provider;
     }
 
     @Bean
-    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .authenticationProvider(authProvider())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/auth/**", "/css/**", "/js/**","/images/**").permitAll()
-                        .requestMatchers("/papers", "/papers/").authenticated()          // list
-                        .requestMatchers("/papers/upload", "/papers/{id}/delete", "/papers").hasAnyRole("ADMIN","TEACHER")
-                        .requestMatchers("/subjects/**").hasAnyRole("ADMIN","TEACHER")
+                        .requestMatchers("/auth/**", "/css/**", "/js/**", "/images/**", "/", "/home").permitAll()
+                        .requestMatchers("/papers/stream").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/student/**").authenticated()
-
+                        .requestMatchers("/teacher/**").hasRole("TEACHER")
+                        .requestMatchers("/student/**").hasRole("STUDENT")
                         .anyRequest().authenticated()
                 )
-
-                .formLogin(login -> login
-                        .loginPage("/auth/login")          // GET  -> render login page
-                        .loginProcessingUrl("/auth/login") // POST -> Spring Security processes credentials here
-                        .failureUrl("/auth/login?error")   // on bad credentials
-                        .defaultSuccessUrl("/?success", true)      // on success
+                .formLogin(form -> form
+                        .loginPage("/auth/login")
+                        .loginProcessingUrl("/auth/login")
+                        .usernameParameter("email")
+                        .passwordParameter("password")
+                        // use our injected success handler for role-based redirect
+                        .successHandler(successHandler)
                         .permitAll()
                 )
-
-                .logout(Customizer.withDefaults());
-        // CSRF is ON by default for form posts. No need to call .csrf(...)
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
+                        .logoutSuccessUrl("/auth/login?logout")
+                        .permitAll()
+                );
 
         return http.build();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+        return authConfig.getAuthenticationManager();
     }
 }
