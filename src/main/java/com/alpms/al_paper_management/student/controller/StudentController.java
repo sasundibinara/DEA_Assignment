@@ -135,7 +135,7 @@ public class StudentController {
                                 Principal principal,
                                 RedirectAttributes redirectAttributes) {
 
-        User user = userService.findByEmail(principal.getName())
+        User user = userServicer.findByEmail(principal.getName())
                 .orElseThrow();
 
         // 1) update fields
