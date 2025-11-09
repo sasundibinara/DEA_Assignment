@@ -8,7 +8,6 @@
   [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen.svg)](https://spring.io/projects/spring-boot)
   [![Java](https://img.shields.io/badge/Java-17+-orange.svg)](https://www.oracle.com/java/)
   [![MySQL](https://img.shields.io/badge/MySQL-8.0+-blue.svg)](https://www.mysql.com/)
-  [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
   **A comprehensive Spring Boot web application for managing Advanced Level past papers, notes, and academic resources**
 
