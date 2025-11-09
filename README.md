@@ -1,70 +1,108 @@
-🧾 ALHORIZON | A/L Paper Management System | DEA Assignment
-<div align="center">
-  <!-- Add your project logo here -->
-  <img src="src/main/resources/static/images/Wlogo.jpg" alt="ALHORIZON Logo" width="200"/>
+#!/usr/bin/env python3
+"""
+Script to create README.md file for ALHORIZON project
+Run this script in your project root directory: python create_readme.py
+"""
 
-A comprehensive Spring Boot web application for managing Advanced Level past papers, notes, and academic resources
-Features • Setup • Usage • API Documentation • Contributors
+def create_readme():
+    readme_content = """# 🧾 ALHORIZON | A/L Paper Management System | DEA Assignment
+
+<div align="center">
+  
+  <!-- Add your project logo here -->
+  <img src="docs/images/logo.png" alt="ALHORIZON Logo" width="200"/>
+  
+  [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen.svg)](https://spring.io/projects/spring-boot)
+  [![Java](https://img.shields.io/badge/Java-17+-orange.svg)](https://www.oracle.com/java/)
+  [![MySQL](https://img.shields.io/badge/MySQL-8.0+-blue.svg)](https://www.mysql.com/)
+  [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
+  **A comprehensive Spring Boot web application for managing Advanced Level past papers, notes, and academic resources**
+
+  [Features](#-key-features) • [Setup](#-installation--setup) • [Usage](#-usage-guide) • [API Documentation](#-api-documentation) • [Contributors](#-contributors)
+
 </div>
 
-📋 Table of Contents
+---
 
-Overview
-Key Features
-Technology Stack
-System Architecture
-Dependencies & Plugins
-Installation & Setup
-Usage Guide
-API Documentation
-Screenshots
-Contributors
+## 📋 Table of Contents
 
+- [Overview](#-overview)
+- [Key Features](#-key-features)
+- [Technology Stack](#-technology-stack)
+- [System Architecture](#-system-architecture)
+- [Dependencies & Plugins](#-dependencies--plugins)
+- [Installation & Setup](#-installation--setup)
+- [Usage Guide](#-usage-guide)
+- [API Documentation](#-api-documentation)
+- [Screenshots](#-screenshots)
+- [Contributors](#-contributors)
 
-🎯 Overview
-ALHORIZON is a secure, scalable web-based platform designed to streamline the organization, distribution, and management of Advanced Level educational materials. Developed as part of the Distributed Enterprise Applications (DEA) assignment, this system provides role-based access control, enabling administrators, teachers, and students to interact with academic resources efficiently.
+---
+
+## 🎯 Overview
+
+**ALHORIZON** is a secure, scalable web-based platform designed to streamline the organization, distribution, and management of Advanced Level educational materials. Developed as part of the Distributed Enterprise Applications (DEA) assignment, this system provides role-based access control, enabling administrators, teachers, and students to interact with academic resources efficiently.
+
 Built with modern enterprise Java technologies, ALHORIZON offers both a user-friendly web interface powered by Thymeleaf and a comprehensive RESTful API for seamless integration with external applications.
 
-🚀 Key Features
-👨‍💼 Administrator Features
+---
 
-Content Management: Upload, organize, and manage academic papers with comprehensive metadata
-Subject Administration: Create and manage subject categories across multiple academic streams
-User Management: Control user access and permissions
-Content Moderation: Review, approve, and remove papers as needed
-Analytics Dashboard: Monitor system usage and content statistics
-Bulk Operations: Perform batch uploads and deletions efficiently
+## 🚀 Key Features
 
-👨‍🏫 Teacher Features
+### 👨‍💼 Administrator Features
+- **Content Management**: Upload, organize, and manage academic papers with comprehensive metadata
+- **Subject Administration**: Create and manage subject categories across multiple academic streams
+- **User Management**: Control user access and permissions
+- **Content Moderation**: Review, approve, and remove papers as needed
+- **Analytics Dashboard**: Monitor system usage and content statistics
+- **Bulk Operations**: Perform batch uploads and deletions efficiently
 
-Paper Upload: Submit past papers, model papers, and revision materials
-Resource Organization: Categorize papers by subject, year, and type
-Content Updates: Edit and update existing paper metadata
-Student Support: Provide curated study materials for specific subjects
+### 👨‍🏫 Teacher Features
+- **Paper Upload**: Submit past papers, model papers, and revision materials
+- **Resource Organization**: Categorize papers by subject, year, and type
+- **Content Updates**: Edit and update existing paper metadata
+- **Student Support**: Provide curated study materials for specific subjects
 
-👨‍🎓 Student Features
+### 👨‍🎓 Student Features
+- **Advanced Search**: Filter papers by subject, year, stream, and paper type
+- **Easy Downloads**: Direct PDF downloads with single-click access
+- **Categorized Browsing**: Navigate content by academic streams (Technology, Science, Commerce, Arts)
+- **Responsive Interface**: Seamless experience across desktop and mobile devices
 
-Advanced Search: Filter papers by subject, year, stream, and paper type
-Easy Downloads: Direct PDF downloads with single-click access
-Categorized Browsing: Navigate content by academic streams (Technology, Science, Commerce, Arts)
-Responsive Interface: Seamless experience across desktop and mobile devices
+### ⚙️ System Features
+- **Secure File Storage**: Local file system storage with configurable paths (`uploads/papers/`)
+- **Role-Based Access Control (RBAC)**: Granular permissions for Admin, Teacher, and Student roles
+- **RESTful API**: Comprehensive JSON API for third-party integrations
+- **Pagination & Filtering**: Efficient data retrieval with customizable page sizes
+- **CSRF Protection**: Secure forms with CSRF tokens (API endpoints exempted for integration)
+- **Password Encryption**: BCrypt hashing for secure credential storage
+- **Audit Logging**: Track all system activities for security and compliance
+- **Modular Architecture**: Clean separation of concerns (`auth`, `papers`, `subjects`, `config`)
 
-⚙️ System Features
+---
 
-Secure File Storage: Local file system storage with configurable paths (uploads/papers/)
-Role-Based Access Control (RBAC): Granular permissions for Admin, Teacher, and Student roles
-RESTful API: Comprehensive JSON API for third-party integrations
-Pagination & Filtering: Efficient data retrieval with customizable page sizes
-CSRF Protection: Secure forms with CSRF tokens (API endpoints exempted for integration)
-Password Encryption: BCrypt hashing for secure credential storage
-Audit Logging: Track all system activities for security and compliance
-Modular Architecture: Clean separation of concerns (auth, papers, subjects, config)
+## 🛠 Technology Stack
 
+| Layer | Technology | Version | Purpose |
+|-------|------------|---------|---------|
+| **Backend Framework** | Spring Boot | 3.x | Core application framework |
+| **View Layer** | Thymeleaf | 3.1+ | Server-side template engine |
+| **Database** | MySQL | 8.0+ | Relational data persistence |
+| **ORM** | Hibernate/JPA | 6.x | Object-relational mapping |
+| **Security** | Spring Security | 6.x | Authentication & authorization |
+| **Frontend** | HTML5, CSS3, Bootstrap | 5.x | Responsive UI design |
+| **Scripting** | JavaScript (ES6+) | - | Client-side interactivity |
+| **File Handling** | Spring Multipart | - | PDF upload management |
+| **Build Tool** | Maven | 3.8+ | Dependency management |
+| **Java Runtime** | JDK | 17+ | Application runtime |
+| **API Testing** | Postman | Latest | API development & testing |
 
-🛠 Technology Stack
-LayerTechnologyVersionPurposeBackend FrameworkSpring Boot3.xCore application frameworkView LayerThymeleaf3.1+Server-side template engineDatabaseMySQL8.0+Relational data persistenceORMHibernate/JPA6.xObject-relational mappingSecuritySpring Security6.xAuthentication & authorizationFrontendHTML5, CSS3, Bootstrap5.xResponsive UI designScriptingJavaScript (ES6+)-Client-side interactivityFile HandlingSpring Multipart-PDF upload managementBuild ToolMaven3.8+Dependency managementJava RuntimeJDK17+Application runtimeAPI TestingPostmanLatestAPI development & testing
+---
 
-🏗 System Architecture
+## 🏗 System Architecture
+
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                      Presentation Layer                      │
 │  ┌──────────────┐  ┌──────────────┐  ┌─────────────────┐   │
@@ -101,11 +139,18 @@ LayerTechnologyVersionPurposeBackend FrameworkSpring Boot3.xCore application fra
 │                      Persistence Layer                       │
 │              MySQL Database + File System                    │
 └─────────────────────────────────────────────────────────────┘
+```
 
-📦 Dependencies & Plugins
-Maven Dependencies
-The project uses the following core dependencies defined in pom.xml:
-xml<dependencies>
+---
+
+## 📦 Dependencies & Plugins
+
+### Maven Dependencies
+
+The project uses the following core dependencies defined in `pom.xml`:
+
+```xml
+<dependencies>
     <!-- Spring Boot Starters -->
     <dependency>
        <groupId>org.springframework.boot</groupId>
@@ -168,8 +213,12 @@ xml<dependencies>
        <scope>test</scope>
     </dependency>
 </dependencies>
-Maven Build Plugins
-xml<build>
+```
+
+### Maven Build Plugins
+
+```xml
+<build>
     <plugins>
         <plugin>
             <groupId>org.springframework.boot</groupId>
@@ -185,35 +234,61 @@ xml<build>
         </plugin>
     </plugins>
 </build>
-Dependency Overview
-DependencyPurposespring-boot-starter-data-jpaJPA/Hibernate for database operationsspring-boot-starter-securityAuthentication & authorizationspring-boot-starter-thymeleafServer-side template enginespring-boot-starter-validationBean validation (JSR-380)spring-boot-starter-webRESTful web services & MVCthymeleaf-extras-springsecurity6Security tags in Thymeleaf templatesspring-boot-devtoolsHot reload during developmentmysql-connector-jMySQL JDBC driverlombokReduce boilerplate codespring-boot-starter-testJUnit, Mockito, AssertJ testingspring-security-testSecurity-specific testing utilities
+```
 
-📥 Installation & Setup
-📋 Prerequisites
+### Dependency Overview
+
+| Dependency | Purpose |
+|------------|---------|
+| **spring-boot-starter-data-jpa** | JPA/Hibernate for database operations |
+| **spring-boot-starter-security** | Authentication & authorization |
+| **spring-boot-starter-thymeleaf** | Server-side template engine |
+| **spring-boot-starter-validation** | Bean validation (JSR-380) |
+| **spring-boot-starter-web** | RESTful web services & MVC |
+| **thymeleaf-extras-springsecurity6** | Security tags in Thymeleaf templates |
+| **spring-boot-devtools** | Hot reload during development |
+| **mysql-connector-j** | MySQL JDBC driver |
+| **lombok** | Reduce boilerplate code |
+| **spring-boot-starter-test** | JUnit, Mockito, AssertJ testing |
+| **spring-security-test** | Security-specific testing utilities |
+
+---
+
+## 📥 Installation & Setup
+
+### 📋 Prerequisites
+
 Before you begin, ensure you have the following installed on your system:
 
-Java Development Kit (JDK): Version 17 or higher
+- **Java Development Kit (JDK)**: Version 17 or higher
+  ```bash
+  java -version  # Verify installation
+  ```
+- **Apache Maven**: Version 3.8 or higher
+  ```bash
+  mvn -version   # Verify installation
+  ```
+- **MySQL Server**: Version 8.0 or higher (running on `localhost:3306`)
+- **Git**: For version control
+- **IDE** (Optional): IntelliJ IDEA, Eclipse, or VS Code with Java extensions
+- **Postman** (Optional): For API testing and development
 
-bash  java -version  # Verify installation
+### 🔧 Step-by-Step Setup Guide
 
-Apache Maven: Version 3.8 or higher
+#### 1️⃣ Clone the Repository
 
-bash  mvn -version   # Verify installation
-
-MySQL Server: Version 8.0 or higher (running on localhost:3306)
-Git: For version control
-IDE (Optional): IntelliJ IDEA, Eclipse, or VS Code with Java extensions
-Postman (Optional): For API testing and development
-
-🔧 Step-by-Step Setup Guide
-1️⃣ Clone the Repository
-bash# Clone the repository
+```bash
+# Clone the repository
 git clone https://github.com/your-username/al-paper-management.git
 
 # Navigate to project directory
 cd al-paper-management
-2️⃣ Database Configuration
-bash# Login to MySQL
+```
+
+#### 2️⃣ Database Configuration
+
+```bash
+# Login to MySQL
 mysql -u root -p
 
 # Create database
@@ -226,9 +301,14 @@ FLUSH PRIVILEGES;
 
 # Exit MySQL
 EXIT;
-3️⃣ Configure Application Properties
-Create or update src/main/resources/application.properties:
-properties# Database Configuration
+```
+
+#### 3️⃣ Configure Application Properties
+
+Create or update `src/main/resources/application.properties`:
+
+```properties
+# Database Configuration
 spring.datasource.url=jdbc:mysql://localhost:3306/alpms_db?useSSL=false&serverTimezone=UTC
 spring.datasource.username=alpms_user
 spring.datasource.password=your_secure_password
@@ -261,20 +341,32 @@ spring.thymeleaf.suffix=.html
 logging.level.com.alpms=DEBUG
 logging.level.org.springframework.web=INFO
 logging.level.org.hibernate=INFO
-4️⃣ Create Upload Directory
-bash# Create directory for storing uploaded papers
+```
+
+#### 4️⃣ Create Upload Directory
+
+```bash
+# Create directory for storing uploaded papers
 mkdir -p uploads/papers
 
 # Verify directory exists
 ls -la uploads/
-5️⃣ Build the Project
-bash# Clean and build the project
+```
+
+#### 5️⃣ Build the Project
+
+```bash
+# Clean and build the project
 mvn clean install
 
 # Skip tests if needed (not recommended for production)
 mvn clean install -DskipTests
-6️⃣ Run the Application
-bash# Method 1: Using Maven
+```
+
+#### 6️⃣ Run the Application
+
+```bash
+# Method 1: Using Maven
 mvn spring-boot:run
 
 # Method 2: Using Java JAR
@@ -282,21 +374,25 @@ java -jar target/alpms-1.0.0.jar
 
 # Method 3: Using IDE
 # Run the main application class: AlPaperManagementApplication.java
-7️⃣ Verify Installation
-Open your browser and navigate to:
+```
 
-Web Interface: http://localhost:8080
-API Base URL: http://localhost:8080/api
-Health Check: http://localhost:8080/actuator/health (if actuator is configured)
+#### 7️⃣ Verify Installation
+
+Open your browser and navigate to:
+- **Web Interface**: http://localhost:8080
+- **API Base URL**: http://localhost:8080/api
+- **Health Check**: http://localhost:8080/actuator/health (if actuator is configured)
 
 Default login credentials:
+- **Email**: `admin@alpms.edu`
+- **Password**: `admin123`
 
-Email: admin@alpms.edu
-Password: admin123
+⚠️ **Important**: Change the default admin password immediately after first login!
 
-⚠️ Important: Change the default admin password immediately after first login!
-🐳 Docker Setup (Alternative)
-bash# Build Docker image
+### 🐳 Docker Setup (Alternative)
+
+```bash
+# Build Docker image
 docker build -t alhorizon:latest .
 
 # Run with Docker Compose
@@ -304,50 +400,74 @@ docker-compose up -d
 
 # View logs
 docker-compose logs -f
-🔍 Troubleshooting
-IssueSolutionPort 8080 already in useChange port in application.properties or kill existing processDatabase connection failedVerify MySQL is running and credentials are correctFile upload failsCheck directory permissions: chmod 755 uploads/papers/Build errorsEnsure Java 17+ and Maven 3.8+ are installedLombok not workingEnable annotation processing in your IDE
+```
 
-📖 Usage Guide
-👨‍💼 Administrator Workflow
+### 🔍 Troubleshooting
 
-Login with admin credentials
-Navigate to Admin Dashboard
-Manage Subjects: Add/Edit subject categories
-Upload Papers: Click "Upload New Paper" and fill metadata
-Moderate Content: Review teacher submissions
-Manage Users: Add teachers and approve accounts
+| Issue | Solution |
+|-------|----------|
+| Port 8080 already in use | Change port in `application.properties` or kill existing process |
+| Database connection failed | Verify MySQL is running and credentials are correct |
+| File upload fails | Check directory permissions: `chmod 755 uploads/papers/` |
+| Build errors | Ensure Java 17+ and Maven 3.8+ are installed |
+| Lombok not working | Enable annotation processing in your IDE |
 
-👨‍🏫 Teacher Workflow
+---
 
-Register or receive account from admin
-Login to teacher portal
-Upload Papers: Select subject, year, and upload PDF
-Edit Metadata: Update paper titles and descriptions
-Track Submissions: View upload history and status
+## 📖 Usage Guide
 
-👨‍🎓 Student Workflow
+### 👨‍💼 Administrator Workflow
 
-Browse papers by subject or stream
-Filter by year and paper type
-Download PDFs with one click
-Search using keywords
+1. **Login** with admin credentials
+2. Navigate to **Admin Dashboard**
+3. **Manage Subjects**: Add/Edit subject categories
+4. **Upload Papers**: Click "Upload New Paper" and fill metadata
+5. **Moderate Content**: Review teacher submissions
+6. **Manage Users**: Add teachers and approve accounts
 
+### 👨‍🏫 Teacher Workflow
 
-📡 API Documentation
-Authentication Endpoints
-httpPOST /api/auth/login
+1. **Register** or receive account from admin
+2. **Login** to teacher portal
+3. **Upload Papers**: Select subject, year, and upload PDF
+4. **Edit Metadata**: Update paper titles and descriptions
+5. **Track Submissions**: View upload history and status
+
+### 👨‍🎓 Student Workflow
+
+1. **Browse** papers by subject or stream
+2. **Filter** by year and paper type
+3. **Download** PDFs with one click
+4. **Search** using keywords
+
+---
+
+## 📡 API Documentation
+
+### Authentication Endpoints
+
+```http
+POST /api/auth/login
 POST /api/auth/register
 POST /api/auth/logout
-Paper Management Endpoints
-httpGET    /api/papers              # List all papers (paginated)
+```
+
+### Paper Management Endpoints
+
+```http
+GET    /api/papers              # List all papers (paginated)
 GET    /api/papers/{id}         # Get paper details
 POST   /api/papers              # Upload new paper (Teacher/Admin)
 PUT    /api/papers/{id}         # Update paper (Teacher/Admin)
 DELETE /api/papers/{id}         # Delete paper (Admin)
 GET    /api/papers/subject/{id} # Filter by subject
 GET    /api/papers/year/{year}  # Filter by year
-Example Request (Postman)
-jsonPOST /api/papers
+```
+
+### Example Request (Postman)
+
+```json
+POST /api/papers
 Content-Type: multipart/form-data
 
 {
@@ -357,28 +477,40 @@ Content-Type: multipart/form-data
   "paperType": "PAST_PAPER",
   "file": <binary>
 }
+```
 
-📸 Screenshots
-Landing Page
-Show Image
-Homepage showcasing featured papers and quick navigation
-Admin Dashboard
-Show Image
-Comprehensive admin panel for content and user management
-Teacher Upload Interface
-Show Image
-Intuitive paper upload form for teachers
-Student Browse Interface
-Show Image
-Filterable paper library for students
-Paper Details View
-Show Image
-Detailed paper information with download option
-Mobile Responsive View
-Show Image
-Fully responsive design for mobile devices
+---
 
-👥 Contributors
+## 📸 Screenshots
+
+### Landing Page
+![Landing Page](docs/images/landing-page.png)
+*Homepage showcasing featured papers and quick navigation*
+
+### Admin Dashboard
+![Admin Dashboard](docs/images/admin-dashboard.png)
+*Comprehensive admin panel for content and user management*
+
+### Teacher Upload Interface
+![Teacher Upload](docs/images/teacher-upload.png)
+*Intuitive paper upload form for teachers*
+
+### Student Browse Interface
+![Student Browse](docs/images/student-browse.png)
+*Filterable paper library for students*
+
+### Paper Details View
+![Paper Details](docs/images/paper-details.png)
+*Detailed paper information with download option*
+
+### Mobile Responsive View
+![Mobile View](docs/images/mobile-view.png)
+*Fully responsive design for mobile devices*
+
+---
+
+## 👥 Contributors
+
 <table>
   <tr>
     <td align="center">
@@ -411,33 +543,60 @@ Fully responsive design for mobile devices
     </td>
   </tr>
 </table>
-How to Contribute
+
+### How to Contribute
+
 We welcome contributions! Please follow these steps:
 
-Fork the repository
-Create a feature branch (git checkout -b feature/AmazingFeature)
-Commit your changes (git commit -m 'Add some AmazingFeature')
-Push to the branch (git push origin feature/AmazingFeature)
-Open a Pull Request
+1. **Fork** the repository
+2. **Create** a feature branch (`git checkout -b feature/AmazingFeature`)
+3. **Commit** your changes (`git commit -m 'Add some AmazingFeature'`)
+4. **Push** to the branch (`git push origin feature/AmazingFeature`)
+5. **Open** a Pull Request
 
-Please read CONTRIBUTING.md for details on our code of conduct and development process.
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and development process.
 
-📞 Support & Contact
+---
 
-Issues: GitHub Issues
-Email: support@alhorizon.edu
-Documentation: Wiki
+## 📞 Support & Contact
 
+- **Issues**: [GitHub Issues](https://github.com/your-username/al-paper-management/issues)
+- **Email**: support@alhorizon.edu
+- **Documentation**: [Wiki](https://github.com/your-username/al-paper-management/wiki)
 
-🙏 Acknowledgments
+---
 
-Spring Boot community for excellent documentation
-Bootstrap team for responsive UI components
-All contributors who helped shape this project
-Distributed Enterprise Applications (DEA) course instructors and mentors
+## 🙏 Acknowledgments
 
+- Spring Boot community for excellent documentation
+- Bootstrap team for responsive UI components
+- All contributors who helped shape this project
+- Distributed Enterprise Applications (DEA) course instructors and mentors
+
+---
 
 <div align="center">
-Made with ❤️ by the ALHORIZON Team
-⭐ Star this repository if you find it helpful!
+  
+  **Made with ❤️ by the ALHORIZON Team**
+  
+  ⭐ Star this repository if you find it helpful!
+
 </div>
+"""
+    
+    # Write README.md file
+    try:
+        with open('README.md', 'w', encoding='utf-8') as f:
+            f.write(readme_content)
+        print("✅ README.md file created successfully!")
+        print("📁 Location: ./README.md")
+        print("\n📝 Next steps:")
+        print("   1. Add your project logo to: docs/images/logo.png")
+        print("   2. Add screenshots to: docs/images/")
+        print("   3. Update GitHub username in URLs")
+        print("   4. Update contributor information")
+    except Exception as e:
+        print(f"❌ Error creating README.md: {e}")
+
+if __name__ == "__main__":
+    create_readme()
