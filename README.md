@@ -1,16 +1,9 @@
-#!/usr/bin/env python3
-"""
-Script to create README.md file for ALHORIZON project
-Run this script in your project root directory: python create_readme.py
-"""
-
-def create_readme():
-    readme_content = """# 🧾 ALHORIZON | A/L Paper Management System | DEA Assignment
+# 🧾 ALHORIZON | A/L Paper Management System | DEA Assignment
 
 <div align="center">
   
   <!-- Add your project logo here -->
-  <img src="docs/images/logo.png" alt="ALHORIZON Logo" width="200"/>
+  <img src="src/main/resources/static/images/Wlogo.jpg" alt="ALHORIZON Logo" width="200"/>
   
   [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen.svg)](https://spring.io/projects/spring-boot)
   [![Java](https://img.shields.io/badge/Java-17+-orange.svg)](https://www.oracle.com/java/)
@@ -582,21 +575,3 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduc
   ⭐ Star this repository if you find it helpful!
 
 </div>
-"""
-    
-    # Write README.md file
-    try:
-        with open('README.md', 'w', encoding='utf-8') as f:
-            f.write(readme_content)
-        print("✅ README.md file created successfully!")
-        print("📁 Location: ./README.md")
-        print("\n📝 Next steps:")
-        print("   1. Add your project logo to: docs/images/logo.png")
-        print("   2. Add screenshots to: docs/images/")
-        print("   3. Update GitHub username in URLs")
-        print("   4. Update contributor information")
-    except Exception as e:
-        print(f"❌ Error creating README.md: {e}")
-
-if __name__ == "__main__":
-    create_readme()
