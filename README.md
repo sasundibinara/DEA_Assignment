@@ -376,29 +376,17 @@ Open your browser and navigate to:
 - **Health Check**: http://localhost:8080/actuator/health (if actuator is configured)
 
 Default login credentials:
-- **Email**: `admin@alpms.edu`
+- **Email**: `admin@gmail.com`
 - **Password**: `admin123`
 
 ⚠️ **Important**: Change the default admin password immediately after first login!
 
-### 🐳 Docker Setup (Alternative)
-
-```bash
-# Build Docker image
-docker build -t alhorizon:latest .
-
-# Run with Docker Compose
-docker-compose up -d
-
-# View logs
-docker-compose logs -f
-```
 
 ### 🔍 Troubleshooting
 
 | Issue | Solution |
 |-------|----------|
-| Port 8080 already in use | Change port in `application.properties` or kill existing process |
+| Port 8080 already in use | Change port in `application.yml` or kill existing process |
 | Database connection failed | Verify MySQL is running and credentials are correct |
 | File upload fails | Check directory permissions: `chmod 755 uploads/papers/` |
 | Build errors | Ensure Java 17+ and Maven 3.8+ are installed |
@@ -472,7 +460,7 @@ Content-Type: multipart/form-data
 ```
 
 
-## 🖼️ Application Interfaces
+## Screenshots
 
 ### 1️⃣ Landing Page  
 ![Landing Page](src/main/resources/static/images/SS/Landing%20Page.png)  
