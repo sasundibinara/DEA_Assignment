@@ -9,3 +9,4 @@ public class AlPaperManagementApplication {
         SpringApplication.run(AlPaperManagementApplication.class, args);
     }
 }
+
