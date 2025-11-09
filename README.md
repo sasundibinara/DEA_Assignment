@@ -507,49 +507,38 @@ Content-Type: multipart/form-data
 <table>
   <tr>
     <td align="center">
-      <a href="https://github.com/contributor1">
+      <a href="https://github.com/sasundibinara">
         <img src="https://github.com/contributor1.png" width="100px;" alt="Contributor 1"/><br />
-        <sub><b>John Doe</b></sub>
+        <sub><b>N P A Sasundi</b></sub>
       </a><br />
-      <sub>Project Lead</sub>
     </td>
     <td align="center">
-      <a href="https://github.com/contributor2">
+      <a href="https://github.com/dunalanjula">
         <img src="https://github.com/contributor2.png" width="100px;" alt="Contributor 2"/><br />
-        <sub><b>Jane Smith</b></sub>
+        <sub><b>M D A Janadara</b></sub>
       </a><br />
-      <sub>Backend Developer</sub>
     </td>
     <td align="center">
-      <a href="https://github.com/contributor3">
+      <a href="https://github.com/chalajayalakshi">
         <img src="https://github.com/contributor3.png" width="100px;" alt="Contributor 3"/><br />
-        <sub><b>Alex Johnson</b></sub>
+        <sub><b>J C jayalakshi</b></sub>
       </a><br />
-      <sub>Frontend Developer</sub>
     </td>
     <td align="center">
-      <a href="https://github.com/contributor4">
+      <a href="https://github.com/shayaruni">
         <img src="https://github.com/contributor4.png" width="100px;" alt="Contributor 4"/><br />
-        <sub><b>Sarah Williams</b></sub>
+        <sub><b>W M S S Wijekoon</b></sub>
       </a><br />
-      <sub>UI/UX Designer</sub>
+    </td>
+        <td align="center">
+      <a href="https://github.com/resandiwork">
+        <img src="https://github.com/contributor3.png" width="100px;" alt="Contributor 3"/><br />
+        <sub><b>I G R M Dharmappriya</b></sub>
+      </a><br />
     </td>
   </tr>
 </table>
 
-### How to Contribute
-
-We welcome contributions! Please follow these steps:
-
-1. **Fork** the repository
-2. **Create** a feature branch (`git checkout -b feature/AmazingFeature`)
-3. **Commit** your changes (`git commit -m 'Add some AmazingFeature'`)
-4. **Push** to the branch (`git push origin feature/AmazingFeature`)
-5. **Open** a Pull Request
-
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and development process.
-
----
 
 ## 📞 Support & Contact
 
