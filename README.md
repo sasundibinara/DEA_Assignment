@@ -476,7 +476,7 @@ Content-Type: multipart/form-data
 ## 🖼️ Application Interfaces
 
 ### 1️⃣ Landing Page  
-![Landing Page](docs/images/landing-page.png)  
+![Landing Page](src/main/resources/static/images/SS/Landing%20Page.png)  
 *Homepage showcasing featured papers and quick navigation*
 
 ---
