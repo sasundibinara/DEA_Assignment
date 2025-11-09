@@ -8,11 +8,9 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-
 
 import java.io.IOException;
 import java.util.List;
@@ -24,7 +22,9 @@ public class PaperService {
     private final SubjectRepository subjects;
     private final FileStorageService storage;
 
-    public PaperService(PaperRepository papers, SubjectRepository subjects, FileStorageService storage) {
+    public PaperService(PaperRepository papers,
+                        SubjectRepository subjects,
+                        FileStorageService storage) {
         this.papers = papers;
         this.subjects = subjects;
         this.storage = storage;
@@ -34,10 +34,17 @@ public class PaperService {
         return papers.findAll();
     }
 
-    public Paper create(String title, Integer year, Paper.Type type, Long subjectId, MultipartFile pdf) throws IOException {
+    public Paper create(String title,
+                        Integer year,
+                        Paper.Type type,
+                        Long subjectId,
+                        MultipartFile pdf) throws IOException {
+
         Subject subject = subjects.findById(subjectId)
                 .orElseThrow(() -> new IllegalArgumentException("Subject not found"));
+
         String path = storage.store(pdf);
+
         Paper p = Paper.builder()
                 .title(title)
                 .year(year)
@@ -45,7 +52,26 @@ public class PaperService {
                 .subject(subject)
                 .filePath(path)
                 .build();
+
         return papers.save(p);
+    }
+
+    /**
+     * Adapter method used by your admin upload controller.
+     * Controller can pass type as String (e.g. "PAST_PAPER"),
+     * we convert it to Paper.Type and reuse create().
+     */
+    public void saveUploadedPaper(String title,
+                                  int year,
+                                  String type,
+                                  Long subjectId,
+                                  MultipartFile pdf) throws IOException {
+
+        // convert String to enum; the String must match the enum name
+        Paper.Type paperType = Paper.Type.valueOf(type);
+
+        // reuse existing logic
+        create(title, year, paperType, subjectId, pdf);
     }
 
     public void delete(Long id) {
@@ -60,7 +86,7 @@ public class PaperService {
     // ---------- Pagination ----------
     public Page<Paper> findPaginated(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return papers.findAll(pageable); // <-- use the injected repo instance
+        return papers.findAll(pageable);
     }
 
     public Page<Paper> searchPaginated(Long subjectId, Integer year, int page, int size) {
@@ -76,7 +102,6 @@ public class PaperService {
         }
     }
 
-
     // total papers
     public long countAll() {
         return papers.count();
@@ -88,11 +113,9 @@ public class PaperService {
                 PageRequest.of(0, limit, Sort.by(Sort.Direction.DESC, "id"))
         ).getContent();
     }
-    // 🔹 subject-specific list (for student subject view)
+
+    // subject-specific list (for student subject view)
     public List<Paper> findBySubject(Long subjectId) {
         return papers.findBySubjectIdOrderByYearDesc(subjectId);
     }
-
-
-
 }
