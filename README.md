@@ -491,14 +491,8 @@ Content-Type: multipart/form-data
 ---
 
 ### 4️⃣ Teacher Profile  
-![Teacher Profile](docs/images/teacher-profile.png)  
+![Teacher Profile](src/main/resources/static/images/SS/teachedashboard.png)  
 *Dedicated teacher profile displaying uploaded papers and stats*
-
----
-
-### 5️⃣ Student Profile  
-![Student Profile](docs/images/student-profile.png)  
-*Personalized student profile showing downloaded papers and preferences*
 
 ---
 
@@ -521,7 +515,7 @@ Content-Type: multipart/form-data
 ---
 
 ### 9️⃣ Mobile Responsive View  
-![Mobile View](docs/images/mobile-view.png)  
+![Mobile View](src/main/resources/static/images/SS/mobile.png)  
 *Fully responsive design optimized for smartphones and tablets*
 
 ## 👥 Contributors
