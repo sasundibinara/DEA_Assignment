@@ -462,7 +462,7 @@ Content-Type: multipart/form-data
 
 You can import the full API collection directly into Postman:
 
-- [Download Postman collection](postmanCollection/alhorizon-postman-collection.json)
+- [Download Postman collection](postmanCollection/ALHORIZON%2-%2A-L%2Paper%2Management%2System.postman_collection.json)
 - Base URL: `http://localhost:8080`
 
 ## Screenshots
