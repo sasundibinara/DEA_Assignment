@@ -451,14 +451,19 @@ POST /api/papers
 Content-Type: multipart/form-data
 
 {
-  "title": "2023 Physics Paper",
+  "title": "2023 SFT Paper",
   "year": 2023,
   "subjectId": 2,
   "paperType": "PAST",
   "file": <binary>
 }
 ```
+### 🧪 Postman Collection
 
+You can import the full API collection directly into Postman:
+
+- [Download Postman collection](postmanCollection/alhorizon-postman-collection.json)
+- Base URL: `http://localhost:8080`
 
 ## Screenshots
 
