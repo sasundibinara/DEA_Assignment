@@ -11,9 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -30,10 +30,12 @@ public class PaperController {
         this.subjectService = subjectService;
     }
 
-//    @GetMapping("/adpaper")
-//    public String adminPaper() {
-//        return "papers/adpaper";
-//    }
+
+
+    @GetMapping("/stream")
+    public String showStreamPage() {
+        return "papers/stream";   // this points to templates/papers/stream.html
+    }
 
 
     // /papers/streams/technology  -> templates/papers/streams/technology.html
@@ -44,10 +46,11 @@ public class PaperController {
 
     // /papers/streams/papercollection/SFT
     // -> templates/papers/streams/papercollection/SFT.html
-    @GetMapping("/streams/papercollection/{name}")
-    public String paperCollection(@PathVariable("name") String SFT) {
-        return "papers/streams/papercollection/" + SFT;
-    }
+//    @GetMapping("/streams/papercollection/{name}")
+//    public String paperCollection(@PathVariable("name") String SFT) {
+//        return "papers/streams/papercollection/" + SFT;
+//    }
+
 
 
     // ✅ Single list endpoint (supports filters)
@@ -76,13 +79,13 @@ public class PaperController {
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", paperPage.getTotalPages());
 
-        return "papers/list";
+        return "papers/adpaper";
     }
     @GetMapping("/all")
     public String listAll(Model model) {
         model.addAttribute("papers", service.all());
         model.addAttribute("subjects", subjectService.findAll());
-        return "papers/list";
+        return "stream";
     }
 
     // 📤 Show upload form
@@ -130,9 +133,24 @@ public class PaperController {
                         "attachment; filename=\"" + path.getFileName() + "\"")
                 .body(resource);
     }
-//    @GetMapping("/papers/stream")
-//    public String showStreamPage() {
-//        return "papers/stream";   // this points to templates/papers/stream.html
-//    }
+    // 🔹 SFT page – load SFT papers from DB
+    @GetMapping("/streams/papercollection/SFT")
+    public String sftPapers(@RequestParam(defaultValue = "0") int page,
+                            @RequestParam(defaultValue = "6") int size,  // 6 cards per page (change as you like)
+                            Model model) {
+
+        // TODO: use the real subject ID for "Science for Technology"
+        Long sftSubjectId = 17L;
+
+        // reuse your existing searchPaginated(subjectId, year, page, size)
+        var paperPage = service.searchPaginated(sftSubjectId, null, page, size);
+
+        model.addAttribute("papers", paperPage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", paperPage.getTotalPages());
+
+        return "papers/streams/papercollection/SFT";
+    }
+
 
 }
