@@ -9,3 +9,4 @@ public interface SubjectRepository extends JpaRepository<Subject, Long> {
     Optional<Subject> findByNameIgnoreCase(String name);
 }
 
+

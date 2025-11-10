@@ -22,6 +22,6 @@ public class Subject {
     private Stream stream = Stream.TECHNOLOGY; // default
 
     public enum Stream {
-        TECHNOLOGY, COMMERCE, ARTS
+        TECHNOLOGY, SCIENCE, MATHEMATICS, COMMERCE, ARTS
     }
 }
