@@ -745,7 +745,7 @@
 =================================== -->
 <nav>
     <div class="nav-container">
-        <a th:href="@{/static}" class="logo-link">
+        <a th:href="@{/}" class="logo-link">
             <img th:src="@{/images/logo.png}" alt="ALHORIZON Logo" style="width: 42px; height: 42px; border-radius: 10px; box-shadow: 0 4px 12px rgba(12,74,110,0.3);">
             <div>
                 <div class="logo-text">ALHORIZON</div>
@@ -754,11 +754,9 @@
         </a>
 
         <div class="nav-links">
-            <a th:href="@{/static}" class="nav-link">Home</a>
-            <a th:href="@{/templates/papers}" class="nav-link">Papers</a>
-            <a th:href="@{/exams}" class="nav-link">Exams</a>
-            <a th:href="@{/templates/subjects}" class="nav-link">Subjects</a>
-            <a th:href="@{/streams}" class="nav-link">Streams</a>
+            <a th:href="@{/}" class="nav-link ">Home</a>
+            <a th:href="@{/papers/stream}" class="nav-link active">Papers</a>
+            <a th:href="@{/subjects}" class="nav-link">Subjects</a>
             <a th:href="@{/about}" class="nav-link">About</a>
         </div>
 
@@ -783,7 +781,7 @@
 <div class="breadcrumb">
     <ul class="breadcrumb-list">
         <li class="breadcrumb-item">
-            <a th:href="@{/static}" class="breadcrumb-link">Home</a>
+            <a th:href="@{/}" class="breadcrumb-link">Home</a>
             <span class="breadcrumb-separator">›</span>
         </li>
         <li class="breadcrumb-item">
@@ -1175,10 +1173,10 @@
             <div>
                 <h4 class="footer-heading">Quick Links</h4>
                 <ul class="footer-links">
-                    <li><a th:href="@{/static}" class="footer-link">Home</a></li>
-                    <li><a th:href="@{/templates/papers}" class="footer-link">Browse Papers</a></li>
+                    <li><a th:href="@{/}" class="footer-link">Home</a></li>
+                    <li><a th:href="@{/papers}" class="footer-link">Browse Papers</a></li>
                     <li><a th:href="@{/exams}" class="footer-link">Examinations</a></li>
-                    <li><a th:href="@{/templates/subjects}" class="footer-link">Subjects</a></li>
+                    <li><a th:href="@{/subjects}" class="footer-link">Subjects</a></li>
                     <li><a th:href="@{/about}" class="footer-link">About Us</a></li>
                 </ul>
             </div>
