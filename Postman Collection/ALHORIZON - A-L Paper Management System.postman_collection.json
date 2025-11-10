@@ -1,0 +1,533 @@
+{
+	"info": {
+		"_postman_id": "9c947912-3be8-42d5-8313-a6f0c5162357",
+		"name": "ALHORIZON - A/L Paper Management System",
+		"description": "Postman collection for AL Paper Management System (Spring Boot + Thymeleaf).\n\nBase URL: {{baseUrl}} (default http://localhost:8080)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33789638",
+		"_collection_link": "https://cloudy-spaceship-117923.postman.co/workspace/Postman-API-Fundamentals-Studen~15237783-4332-4696-a9d0-ee5629c52ca1/collection/33789638-9c947912-3be8-42d5-8313-a6f0c5162357?action=share&source=collection_link&creator=33789638"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"admin\",\n  \"email\": \"admin@gmail.com\",\n  \"password\": \"admin123\",\n  \"confirmPassword\": \"admin123\",\n  \"role\": \"ADMIN\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						},
+						"description": "Adjust JSON fields to match your actual registration DTO."
+					},
+					"response": []
+				},
+				{
+					"name": "Login User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "lahiru@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "lahiru123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						},
+						"description": "Standard Spring Security username/password login. Adjust parameter names if needed. Enable cookie jar in Postman to reuse the session."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Papers - Admin Upload (adpaper)",
+			"item": [
+				{
+					"name": "Show Upload Form (adpaper)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/papers/adpaper",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"papers",
+								"adpaper"
+							]
+						},
+						"description": "Returns the Thymeleaf upload form used in the admin dashboard."
+					},
+					"response": []
+				},
+				{
+					"name": "Upload Paper via adpaper (multipart)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Sample SFT Paper",
+									"type": "text"
+								},
+								{
+									"key": "year",
+									"value": "2024",
+									"type": "text"
+								},
+								{
+									"key": "type",
+									"value": "PAST_PAPER",
+									"type": "text"
+								},
+								{
+									"key": "subjectId",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "pdf",
+									"type": "file",
+									"src": "/absolute/path/to/sample.pdf"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/papers/adpaper",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"papers",
+								"adpaper"
+							]
+						},
+						"description": "Matches PaperAdminController.handleUpload(...). Requires valid subjectId and possibly CSRF/session if security is enabled."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Papers - Main API",
+			"item": [
+				{
+					"name": "List Papers (paginated, optional filters)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/papers?page=0&size=10",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"papers"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "subjectId",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "year",
+									"value": "",
+									"disabled": true
+								}
+							]
+						},
+						"description": "PaperController.list(...). Returns HTML table (adpaper-list template). Add subjectId & year to filter."
+					},
+					"response": []
+				},
+				{
+					"name": "List All Papers (no pagination)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/papers/all",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"papers",
+								"all"
+							]
+						},
+						"description": "PaperController.listAll(...). Useful for quick debugging."
+					},
+					"response": []
+				},
+				{
+					"name": "Show Upload Form (papers/upload)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/papers/upload",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"papers",
+								"upload"
+							]
+						},
+						"description": "Returns the general upload form (papers/upload.html)."
+					},
+					"response": []
+				},
+				{
+					"name": "Upload Paper (general /papers)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Sample SFT Paper 2",
+									"type": "text"
+								},
+								{
+									"key": "year",
+									"value": "2023",
+									"type": "text"
+								},
+								{
+									"key": "type",
+									"value": "PAST_PAPER",
+									"type": "text"
+								},
+								{
+									"key": "subjectId",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "pdf",
+									"type": "file",
+									"src": "/absolute/path/to/sample2.pdf"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/papers",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"papers"
+							]
+						},
+						"description": "PaperController.upload(...). Uses Paper.Type enum for 'type'. Requires multipart/form-data."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Paper",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/papers/1/delete",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"papers",
+								"1",
+								"delete"
+							]
+						},
+						"description": "Delete paper with id=1. CSRF & authentication may be required depending on your security config."
+					},
+					"response": []
+				},
+				{
+					"name": "Download Paper",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/papers/1/download",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"papers",
+								"1",
+								"download"
+							]
+						},
+						"description": "Returns the PDF file for paper id=1. Postman will show it as a file response."
+					},
+					"response": []
+				},
+				{
+					"name": "Student Stream Page (HTML)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/papers/streams/technology",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"papers",
+								"streams",
+								"technology"
+							]
+						},
+						"description": "PaperController.stream(\"technology\"). Renders templates/papers/streams/technology.html."
+					},
+					"response": []
+				},
+				{
+					"name": "Student Paper Collection (e.g. SFT)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/papers/streams/papercollection/SFT",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"papers",
+								"streams",
+								"papercollection",
+								"SFT"
+							]
+						},
+						"description": "PaperController.paperCollection(\"SFT\"). Renders templates/papers/streams/papercollection/SFT.html."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Subjects",
+			"item": [
+				{
+					"name": "List Subjects (HTML)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/subjects",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"subjects"
+							]
+						},
+						"description": "SubjectController.list(...). Returns subjects/list.html."
+					},
+					"response": []
+				},
+				{
+					"name": "New Subject Form (HTML)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/subjects/new",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"subjects",
+								"new"
+							]
+						},
+						"description": "SubjectController.createForm(...). Returns subjects/new.html."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Subject",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Science for Technology",
+									"type": "text"
+								},
+								{
+									"key": "stream",
+									"value": "TECHNOLOGY",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/subjects",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"subjects"
+							]
+						},
+						"description": "Matches SubjectController.create(...). `stream` should be one of Subject.Stream enum values."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Subject",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/subjects/1/delete",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"subjects",
+								"1",
+								"delete"
+							]
+						},
+						"description": "Deletes subject with id=1. Make sure this subject is not referenced by papers, or you'll get a constraint error."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Public Pages",
+			"item": [
+				{
+					"name": "Home Page",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								""
+							]
+						},
+						"description": "Landing page with hero, stats, etc."
+					},
+					"response": []
+				},
+				{
+					"name": "About Page",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/about",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"about"
+							]
+						},
+						"description": "Your custom About page."
+					},
+					"response": []
+				},
+				{
+					"name": "Admin Dashboard (HTML)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/admin/dashboard",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"dashboard"
+							]
+						},
+						"description": "Only if you have an Admin dashboard mapping. Requires auth."
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080"
+		}
+	]
+}
