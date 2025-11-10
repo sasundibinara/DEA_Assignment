@@ -503,7 +503,7 @@ Content-Type: multipart/form-data
 ---
 
 ### 6️⃣ Subjects Details View  
-![Subjects Details](src/main/resources/static/images/SS/pagedetails.png)  
+![Subjects Details](src/main/resources/static/images/SS/paperdetails.png)  
 *Overview of subjects and categorized paper listings*
 
 ---
