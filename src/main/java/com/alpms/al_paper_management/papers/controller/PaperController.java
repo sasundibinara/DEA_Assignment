@@ -11,6 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -26,6 +29,26 @@ public class PaperController {
         this.service = service;
         this.subjectService = subjectService;
     }
+
+//    @GetMapping("/adpaper")
+//    public String adminPaper() {
+//        return "papers/adpaper";
+//    }
+
+
+    // /papers/streams/technology  -> templates/papers/streams/technology.html
+    @GetMapping("/streams/{name}")
+    public String stream(@PathVariable("name") String technology) {
+        return "papers/streams/" + technology;
+    }
+
+    // /papers/streams/papercollection/SFT
+    // -> templates/papers/streams/papercollection/SFT.html
+    @GetMapping("/streams/papercollection/{name}")
+    public String paperCollection(@PathVariable("name") String SFT) {
+        return "papers/streams/papercollection/" + SFT;
+    }
+
 
     // ✅ Single list endpoint (supports filters)
     @GetMapping
@@ -107,9 +130,9 @@ public class PaperController {
                         "attachment; filename=\"" + path.getFileName() + "\"")
                 .body(resource);
     }
-    @GetMapping("/papers/stream")
-    public String showStreamPage() {
-        return "papers/stream";   // this points to templates/papers/stream.html
-    }
+//    @GetMapping("/papers/stream")
+//    public String showStreamPage() {
+//        return "papers/stream";   // this points to templates/papers/stream.html
+//    }
 
 }
