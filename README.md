@@ -1,4 +1,4 @@
-<img width="1920" height="2023" alt="upload" src="https://github.com/user-attachments/assets/b7e2bb39-7507-408d-a45b-adf47bbbe1ae" /># 🧾 ALHORIZON | A/L Paper Management System | DEA Assignment
+# 🧾 ALHORIZON | A/L Paper Management System | DEA Assignment
 
 <div align="center">
   
