@@ -1010,9 +1010,8 @@
     =================================== -->
     <nav>
         <div class="nav-container">
-            <!-- Logo -->
             <a th:href="@{/}" class="logo-link">
-                <div class="logo-icon">AL</div>
+                <img th:src="@{/images/logo.png}" alt="ALHORIZON Logo" style="width: 42px; height: 42px; border-radius: 10px; box-shadow: 0 4px 12px rgba(12,74,110,0.3);">
                 <div>
                     <div class="logo-text">ALHORIZON</div>
                     <div class="logo-subtitle">A/L Paper Management System</div>
@@ -1022,8 +1021,7 @@
             <!-- Desktop Navigation -->
             <div class="nav-links">
                 <a th:href="@{/}" class="nav-link active">Home</a>
-                <a th:href="@{/papers}" class="nav-link">Papers</a>
-                <a th:href="@{/exams}" class="nav-link">Exams</a>
+                <a th:href="@{/papers/stream}" class="nav-link ">Papers</a>
                 <a th:href="@{/subjects}" class="nav-link">Subjects</a>
                 <a th:href="@{/about}" class="nav-link">About</a>
             </div>
@@ -1048,7 +1046,6 @@
         <div class="mobile-menu">
             <a th:href="@{/}" class="mobile-nav-link">Home</a>
             <a th:href="@{/papers/stream}" class="mobile-nav-link">Papers</a>
-            <a th:href="@{/exams}" class="mobile-nav-link">Exams</a>
             <a th:href="@{/subjects}" class="mobile-nav-link">Subjects</a>
             <a th:href="@{/about}" class="mobile-nav-link">About</a>
         </div>
