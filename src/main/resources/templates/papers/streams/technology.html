@@ -1,0 +1,1366 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technology Stream | ALHORIZON</title>
+    <link rel="icon" th:href="@{/images/logo.png}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ===================================
+           GLOBAL STYLES & RESET
+        =================================== */
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+            'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background: #f8fafc;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* ===================================
+           NAVIGATION STYLES
+        =================================== */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(15,23,42,0.08);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-link:hover {
+            transform: translateY(-2px);
+        }
+
+        .logo-text {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #0c4a6e;
+            line-height: 1;
+            margin-bottom: 0.15rem;
+        }
+
+        .logo-subtitle {
+            font-size: 0.7rem;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+        }
+
+        .nav-link {
+            position: relative;
+            color: #475569;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #0c4a6e;
+            transform: translateY(-2px);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .login-btn {
+            padding: 0.6rem 1.5rem;
+            color: #0c4a6e;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .login-btn:hover {
+            background: #f1f5f9;
+            transform: scale(1.05);
+        }
+
+        .register-btn {
+            padding: 0.6rem 1.5rem;
+            background: linear-gradient(135deg, #0c4a6e, #0369a1);
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(12,74,110,0.25);
+            transition: all 0.3s ease;
+        }
+
+        .register-btn:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 6px 16px rgba(12,74,110,0.35);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        /* ===================================
+           BREADCRUMB
+        =================================== */
+        .breadcrumb {
+            max-width: 1200px;
+            margin: 2rem auto 0;
+            padding: 0 2rem;
+        }
+
+        .breadcrumb-list {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        .breadcrumb-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+        }
+
+        .breadcrumb-link {
+            color: #64748b;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb-link:hover {
+            color: #0c4a6e;
+        }
+
+        .breadcrumb-separator {
+            color: #cbd5e1;
+        }
+
+        .breadcrumb-current {
+            color: #0c4a6e;
+            font-weight: 600;
+        }
+
+        /* ===================================
+           STREAM HEADER
+        =================================== */
+        .stream-header {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .stream-header-card {
+            background: linear-gradient(135deg, #0c4a6e, #0369a1);
+            border-radius: 24px;
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(12, 74, 110, 0.3);
+        }
+
+        .header-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 30px 30px;
+            opacity: 0.3;
+        }
+
+        .stream-header-content {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .stream-header-icon {
+            width: 100px;
+            height: 100px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.3);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .stream-header-text h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            margin: 0 0 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .stream-header-description {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.9);
+            line-height: 1.6;
+            max-width: 700px;
+        }
+
+        /* ===================================
+           SUBJECTS SECTION
+        =================================== */
+        .subjects-section {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem 5rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 0 0 0.5rem;
+        }
+
+        .section-subtitle {
+            font-size: 1rem;
+            color: #64748b;
+        }
+
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .subject-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .subject-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(12, 74, 110, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .subject-card:hover::before {
+            left: 100%;
+        }
+
+        .subject-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+            border-color: rgba(12, 74, 110, 0.3);
+        }
+
+        .subject-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .subject-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            transition: all 0.4s ease;
+        }
+
+        .subject-card:hover .subject-icon {
+            transform: rotateY(360deg) scale(1.1);
+        }
+
+        .subject-code {
+            background: rgba(12, 74, 110, 0.1);
+            color: #0c4a6e;
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .subject-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 0 0 0.75rem;
+        }
+
+        .subject-description {
+            font-size: 0.9rem;
+            color: #64748b;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .subject-meta {
+            display: flex;
+            gap: 1.5rem;
+            padding: 1.25rem 0;
+            border-top: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 1.5rem;
+        }
+
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .meta-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #0c4a6e;
+            margin-bottom: 0.15rem;
+        }
+
+        .meta-label {
+            font-size: 0.7rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .subject-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tag {
+            background: #f1f5f9;
+            color: #475569;
+            padding: 0.4rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .subject-card:hover .tag {
+            background: #dbeafe;
+            color: #0c4a6e;
+        }
+
+        .subject-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-view {
+            flex: 1;
+            padding: 0.75rem;
+            background: linear-gradient(135deg, #0c4a6e, #0369a1);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-view:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(12, 74, 110, 0.3);
+        }
+
+        .btn-papers {
+            flex: 1;
+            padding: 0.75rem;
+            background: white;
+            color: #0c4a6e;
+            border: 2px solid #dbeafe;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-papers:hover {
+            background: #dbeafe;
+            border-color: #0c4a6e;
+        }
+
+        /* ===================================
+           STATISTICS BAR
+        =================================== */
+        .stats-bar {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .stats-container {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 1rem;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            transition: all 0.3s ease;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #0c4a6e;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-text {
+            font-size: 0.85rem;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+        }
+
+        /* ===================================
+           FOOTER STYLES
+        =================================== */
+        footer {
+            background: linear-gradient(180deg, #0f172a 0%, #0c1423 100%);
+            color: #94a3b8;
+            padding: 4rem 2rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
+            gap: 3rem;
+            padding-bottom: 3rem;
+            border-bottom: 1px solid rgba(148,163,184,0.1);
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-brand-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #f1f5f9;
+        }
+
+        .footer-brand-tagline {
+            font-size: 0.7rem;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .footer-description {
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin: 0 0 1.5rem;
+            color: #94a3b8;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(148,163,184,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #94a3b8;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background: rgba(59,130,246,0.2);
+            color: #60a5fa;
+            transform: translateY(-3px);
+        }
+
+        .footer-heading {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #f1f5f9;
+            margin: 0 0 1.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-link {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: #f1f5f9;
+        }
+
+        .footer-contact-item {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .footer-contact-item svg {
+            flex-shrink: 0;
+            margin-top: 0.15rem;
+        }
+
+        .footer-bottom {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 0;
+            gap: 1rem;
+        }
+
+        .footer-copyright {
+            margin: 0;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-text {
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        /* ===================================
+           ANIMATIONS
+        =================================== */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===================================
+           RESPONSIVE DESIGN
+        =================================== */
+        @media (max-width: 1024px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .stream-header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .subjects-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stream-header-card {
+                padding: 2rem;
+            }
+
+            .stream-header-text h1 {
+                font-size: 2rem;
+            }
+
+            .subjects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .subject-actions {
+                flex-direction: column;
+            }
+
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr !important;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ===================================
+     NAVIGATION BAR
+=================================== -->
+<nav>
+    <div class="nav-container">
+        <a th:href="@{/static}" class="logo-link">
+            <img th:src="@{/images/logo.png}" alt="ALHORIZON Logo" style="width: 42px; height: 42px; border-radius: 10px; box-shadow: 0 4px 12px rgba(12,74,110,0.3);">
+            <div>
+                <div class="logo-text">ALHORIZON</div>
+                <div class="logo-subtitle">A/L Paper Management System</div>
+            </div>
+        </a>
+
+        <div class="nav-links">
+            <a th:href="@{/static}" class="nav-link">Home</a>
+            <a th:href="@{/templates/papers}" class="nav-link">Papers</a>
+            <a th:href="@{/exams}" class="nav-link">Exams</a>
+            <a th:href="@{/templates/subjects}" class="nav-link">Subjects</a>
+            <a th:href="@{/streams}" class="nav-link">Streams</a>
+            <a th:href="@{/about}" class="nav-link">About</a>
+        </div>
+
+        <div class="nav-actions">
+            <a th:href="@{/auth/login}" class="login-btn">Login</a>
+            <a th:href="@{/auth/register}" class="register-btn">Get Started</a>
+
+            <button class="mobile-menu-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0c4a6e" stroke-width="2">
+                    <line x1="3" y1="12" x2="21" y2="12"/>
+                    <line x1="3" y1="6" x2="21" y2="6"/>
+                    <line x1="3" y1="18" x2="21" y2="18"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- ===================================
+     BREADCRUMB
+=================================== -->
+<div class="breadcrumb">
+    <ul class="breadcrumb-list">
+        <li class="breadcrumb-item">
+            <a th:href="@{/static}" class="breadcrumb-link">Home</a>
+            <span class="breadcrumb-separator">›</span>
+        </li>
+        <li class="breadcrumb-item">
+            <a th:href="@{/streams}" class="breadcrumb-link">Streams</a>
+            <span class="breadcrumb-separator">›</span>
+        </li>
+        <li class="breadcrumb-item">
+            <span class="breadcrumb-current">Technology Stream</span>
+        </li>
+    </ul>
+</div>
+
+<!-- ===================================
+     STREAM HEADER
+=================================== -->
+<div class="stream-header">
+    <div class="stream-header-card">
+        <div class="header-pattern"></div>
+        <div class="stream-header-content">
+            <div class="stream-header-icon">💻</div>
+            <div class="stream-header-text">
+                <h1>Technology Stream</h1>
+                <p class="stream-header-description">
+                    Technical and vocational subjects including ICT, engineering technology, and applied sciences with practical exam resources and comprehensive study materials.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===================================
+     STATISTICS BAR
+=================================== -->
+<div class="stats-bar">
+    <div class="stats-container">
+        <div class="stat-box">
+            <div class="stat-number">9</div>
+            <div class="stat-text">Total Subjects</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-number">140+</div>
+            <div class="stat-text">Past Papers</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-number">280+</div>
+            <div class="stat-text">Study Resources</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-number">95%</div>
+            <div class="stat-text">Success Rate</div>
+        </div>
+    </div>
+</div>
+
+<!-- ===================================
+     SUBJECTS SECTION
+=================================== -->
+<div class="subjects-section">
+    <div class="section-header">
+        <h2 class="section-title">Available Subjects</h2>
+        <p class="section-subtitle">Explore comprehensive resources for each subject in the Technology stream</p>
+    </div>
+
+    <div class="subjects-grid">
+        <!-- Engineering Technology -->
+        <div class="subject-card">
+            <div class="subject-header">
+                <div class="subject-icon">⚙️</div>
+                <span class="subject-code">ET-002</span>
+            </div>
+            <h3 class="subject-title">Engineering Technology</h3>
+            <p class="subject-description">
+                Mechanical, electrical, and civil engineering principles with hands-on technical applications and design projects.
+            </p>
+            <div class="subject-meta">
+                <div class="meta-item">
+                    <span class="meta-value">38</span>
+                    <span class="meta-label">Papers</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-value">3</span>
+                    <span class="meta-label">Units</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-value">150</span>
+                    <span class="meta-label">Hours</span>
+                </div>
+            </div>
+            <div class="subject-tags">
+                <span class="tag">Mechanical</span>
+                <span class="tag">Electrical</span>
+                <span class="tag">Design</span>
+            </div>
+            <div class="subject-actions">
+                <button class="btn-view" onclick="viewSubject('ET')">
+                    View Details
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+                <button class="btn-papers" onclick="viewPapers('ET')">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 2H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7"/>
+                        <path d="M9 2l5 5"/>
+                    </svg>
+                    Papers
+                </button>
+            </div>
+        </div>
+
+        <!-- Biosystems Technology -->
+        <div class="subject-card">
+            <div class="subject-header">
+                <div class="subject-icon">🌱</div>
+                <span class="subject-code">BT-004</span>
+            </div>
+            <h3 class="subject-title">Biosystems Technology</h3>
+            <p class="subject-description">
+                Agricultural technology, biotechnology, and sustainable systems with focus on food production and processing.
+            </p>
+            <div class="subject-meta">
+                <div class="meta-item">
+                    <span class="meta-value">25</span>
+                    <span class="meta-label">Papers</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-value">3</span>
+                    <span class="meta-label">Units</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-value">100</span>
+                    <span class="meta-label">Hours</span>
+                </div>
+            </div>
+            <div class="subject-tags">
+                <span class="tag">Agriculture</span>
+                <span class="tag">Biotech</span>
+                <span class="tag">Processing</span>
+            </div>
+            <div class="subject-actions">
+                <button class="btn-view" onclick="viewSubject('BT')">
+                    View Details
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+                <button class="btn-papers" onclick="viewPapers('BT')">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 2H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7"/>
+                        <path d="M9 2l5 5"/>
+                    </svg>
+                    Papers
+                </button>
+            </div>
+        </div>
+
+        <!-- Science for Technology -->
+        <div class="subject-card">
+            <div class="subject-header">
+                <div class="subject-icon">🔬</div>
+                <span class="subject-code">SFT-003</span>
+            </div>
+            <h3 class="subject-title">Science for Technology</h3>
+            <p class="subject-description">
+                Applied physics, chemistry, and materials science focused on technological applications and innovations.
+            </p>
+            <div class="subject-meta">
+                <div class="meta-item">
+                    <span class="meta-value">35</span>
+                    <span class="meta-label">Papers</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-value">3</span>
+                    <span class="meta-label">Units</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-value">110</span>
+                    <span class="meta-label">Hours</span>
+                </div>
+            </div>
+            <div class="subject-tags">
+                <span class="tag">Physics</span>
+                <span class="tag">Chemistry</span>
+                <span class="tag">Materials</span>
+            </div>
+            <div class="subject-actions">
+                <button class="btn-view" onclick="viewSubject('SFT')">
+                    View Details
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+
+
+                <button class="btn-papers" onclick="window.location.href='/papers/streams/papercollection/SFT'">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 2H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7"/>
+                        <path d="M9 2l5 5"/>
+                    </svg>
+                    Papers
+                </button>
+            </div>
+        </div>
+
+        <!-- ICT Subject -->
+        <div class="subject-card">
+            <div class="subject-header">
+                <div class="subject-icon">💻</div>
+                <span class="subject-code">ICT-001</span>
+            </div>
+            <h3 class="subject-title">Information & Communication Technology</h3>
+            <p class="subject-description">
+                Comprehensive ICT curriculum covering programming, databases, networking, and web development with practical applications.
+            </p>
+            <div class="subject-meta">
+                <div class="meta-item">
+                    <span class="meta-value">42</span>
+                    <span class="meta-label">Papers</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-value">3</span>
+                    <span class="meta-label">Units</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-value">120</span>
+                    <span class="meta-label">Hours</span>
+                </div>
+            </div>
+            <div class="subject-tags">
+                <span class="tag">Programming</span>
+                <span class="tag">Databases</span>
+                <span class="tag">Networks</span>
+                <span class="tag">Web Dev</span>
+            </div>
+            <div class="subject-actions">
+                <button class="btn-view" onclick="viewSubject('ICT')">
+                    View Details
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+                <button class="btn-papers" onclick="viewPapers('ICT')">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 2H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7"/>
+                        <path d="M9 2l5 5"/>
+                    </svg>
+                    Papers
+                </button>
+            </div>
+        </div>
+
+        <!-- Art -->
+        <div class="subject-card">
+            <div class="subject-header">
+                <div class="subject-icon">🎨</div>
+                <span class="subject-code">ART-005</span>
+            </div>
+            <h3 class="subject-title">Art</h3>
+            <p class="subject-description">
+                Creative expression through various artistic mediums including drawing, painting, sculpture, and digital art with emphasis on design principles.
+            </p>
+            <div class="subject-meta">
+                <div class="meta-item">
+                    <span class="meta-value">25</span>
+                    <span class="meta-label">Papers</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-value">3</span>
+                    <span class="meta-label">Units</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-value">100</span>
+                    <span class="meta-label">Hours</span>
+                </div>
+            </div>
+            <div class="subject-tags">
+                <span class="tag">Drawing</span>
+                <span class="tag">Painting</span>
+                <span class="tag">Design</span>
+            </div>
+            <div class="subject-actions">
+                <button class="btn-view" onclick="viewSubject('ART')">
+                    View Details
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+                <button class="btn-papers" onclick="viewPapers('ART')">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 2H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7"/>
+                        <path d="M9 2l5 5"/>
+                    </svg>
+                    Papers
+                </button>
+            </div>
+        </div>
+
+        <!-- Economics -->
+        <div class="subject-card">
+            <div class="subject-header">
+                <div class="subject-icon">📊</div>
+                <span class="subject-code">ECO-006</span>
+            </div>
+            <h3 class="subject-title">Economics</h3>
+            <p class="subject-description">
+                Microeconomics, macroeconomics, and economic policy analysis with focus on technological impact on economic systems and markets.
+            </p>
+            <div class="subject-meta">
+                <div class="meta-item">
+                    <span class="meta-value">28</span>
+                    <span class="meta-label">Papers</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-value">3</span>
+                    <span class="meta-label">Units</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-value">110</span>
+                    <span class="meta-label">Hours</span>
+                </div>
+            </div>
+            <div class="subject-tags">
+                <span class="tag">Microeconomics</span>
+                <span class="tag">Macroeconomics</span>
+                <span class="tag">Policy</span>
+            </div>
+            <div class="subject-actions">
+                <button class="btn-view" onclick="viewSubject('ECO')">
+                    View Details
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+                <button class="btn-papers" onclick="viewPapers('ECO')">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 2H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7"/>
+                        <path d="M9 2l5 5"/>
+                    </svg>
+                    Papers
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===================================
+     FOOTER
+=================================== -->
+<footer>
+    <div class="footer-container">
+        <div class="footer-grid">
+            <!-- Company Info -->
+            <div>
+                <div class="footer-brand">
+                    <img th:src="@{/images/logo.png}" alt="ALHORIZON Logo" style="width: 42px; height: 42px; border-radius: 10px;">
+                    <div>
+                        <div class="footer-brand-name">ALHORIZON</div>
+                        <div class="footer-brand-tagline">Paper Management System</div>
+                    </div>
+                </div>
+                <p class="footer-description">
+                    Empowering educational institutions with advanced digital tools for examination management, paper organization, and academic excellence.
+                </p>
+                <div class="footer-social">
+                    <a href="#" class="social-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div>
+                <h4 class="footer-heading">Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a th:href="@{/static}" class="footer-link">Home</a></li>
+                    <li><a th:href="@{/templates/papers}" class="footer-link">Browse Papers</a></li>
+                    <li><a th:href="@{/exams}" class="footer-link">Examinations</a></li>
+                    <li><a th:href="@{/templates/subjects}" class="footer-link">Subjects</a></li>
+                    <li><a th:href="@{/about}" class="footer-link">About Us</a></li>
+                </ul>
+            </div>
+
+            <!-- Resources -->
+            <div>
+                <h4 class="footer-heading">Resources</h4>
+                <ul class="footer-links">
+                    <li><a th:href="@{/help}" class="footer-link">Help Center</a></li>
+                    <li><a th:href="@{/documentation}" class="footer-link">Documentation</a></li>
+                    <li><a th:href="@{/tutorials}" class="footer-link">Tutorials</a></li>
+                    <li><a th:href="@{/faq}" class="footer-link">FAQs</a></li>
+                    <li><a th:href="@{/support}" class="footer-link">Support</a></li>
+                </ul>
+            </div>
+
+            <!-- Legal -->
+            <div>
+                <h4 class="footer-heading">Legal</h4>
+                <ul class="footer-links">
+                    <li><a th:href="@{/privacy}" class="footer-link">Privacy Policy</a></li>
+                    <li><a th:href="@{/terms}" class="footer-link">Terms of Service</a></li>
+                    <li><a th:href="@{/cookies}" class="footer-link">Cookie Policy</a></li>
+                    <li><a th:href="@{/gdpr}" class="footer-link">GDPR</a></li>
+                    <li><a th:href="@{/license}" class="footer-link">Licenses</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div>
+                <h4 class="footer-heading">Contact Us</h4>
+                <ul class="footer-links">
+                    <li class="footer-contact-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                        <span style="font-size: 0.85rem; line-height: 1.6;">
+                            123 Education Street<br>
+                            Colombo, Sri Lanka
+                        </span>
+                    </li>
+                    <li class="footer-contact-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                        </svg>
+                        <a href="tel:+94112345678" class="footer-link">+94 11 234 5678</a>
+                    </li>
+                    <li class="footer-contact-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                            <polyline points="22,6 12,13 2,6"/>
+                        </svg>
+                        <a href="mailto:info@alpaper.edu.lk" class="footer-link">info@alpaper.edu.lk</a>
+                    </li>
+                    <li class="footer-contact-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                        <span style="font-size: 0.85rem;">Mon - Fri: 8:00 AM - 5:00 PM</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+            <p class="footer-copyright">
+                © 2025 AL Paper Management System. All rights reserved.
+            </p>
+            <div class="footer-bottom-links">
+                <a th:href="@{/sitemap}" class="footer-link" style="font-size: 0.85rem;">Sitemap</a>
+                <a th:href="@{/accessibility}" class="footer-link" style="font-size: 0.85rem;">Accessibility</a>
+                <a th:href="@{/status}" class="footer-link" style="font-size: 0.85rem;">System Status</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- ===================================
+     JAVASCRIPT
+=================================== -->
+<script>
+    // Initialize page with animations
+    document.addEventListener('DOMContentLoaded', function() {
+        // Animate subject cards on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.6s ease-out forwards';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        const subjectCards = document.querySelectorAll('.subject-card');
+        subjectCards.forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.animationDelay = `${index * 0.1}s`;
+            observer.observe(card);
+        });
+
+        // Animate stats on scroll
+        const statBoxes = document.querySelectorAll('.stat-box');
+        statBoxes.forEach((box, index) => {
+            box.style.opacity = '0';
+            box.style.animation = `fadeInUp 0.6s ease-out ${index * 0.1}s forwards`;
+        });
+
+        // Mobile menu toggle
+        const menuBtn = document.querySelector('.mobile-menu-btn');
+        if (menuBtn) {
+            menuBtn.addEventListener('click', function() {
+                alert('Mobile menu toggle - implement as needed');
+            });
+        }
+
+        // Add ripple effect to buttons
+        const buttons = document.querySelectorAll('.btn-view, .btn-papers');
+        buttons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(255, 255, 255, 0.6)';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.animation = 'ripple 0.6s ease-out';
+                ripple.style.pointerEvents = 'none';
+
+                this.style.position = 'relative';
+                this.style.overflow = 'hidden';
+                this.appendChild(ripple);
+
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+    });
+
+    // Function to view subject details
+    function viewSubject(subjectCode) {
+        console.log('Viewing subject:', subjectCode);
+        // Redirect to subject detail page
+        window.location.href = `/subjects/${subjectCode.toLowerCase()}`;
+    }
+
+    // Function to view papers
+    function viewPapers(subjectCode) {
+        console.log('Viewing papers for:', subjectCode);
+        // Redirect to papers page with filter
+        window.location.href = `/papers?subject=${subjectCode.toLowerCase()}`;
+    }
+
+    // Add ripple animation styles
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes ripple {
+            from {
+                transform: scale(0);
+                opacity: 1;
+            }
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+</script>
+
+</body>
+</html>
