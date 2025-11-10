@@ -468,13 +468,13 @@ Content-Type: multipart/form-data
 
 ---
 ### 2️⃣ Login Page  
-![Login Page](src/main/resources/static/images/SS/login%20page.png)  
+![Login Page](src/main/resources/static/images/SS/login.png)  
 *Secure login interface for administrators, teachers, and students*
 
 ---
 
 ### 3️⃣ Register Page  
-![Register Page](src/main/resources/static/images/SS/register%20page.png)  
+![Register Page](src/main/resources/static/images/SS/register.png)  
 *User-friendly registration form for new users to create accounts*
 
 ---
