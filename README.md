@@ -492,6 +492,12 @@ Content-Type: multipart/form-data
 
 ---
 
+### 6️⃣ Stream Page  
+![Stream Page](src/main/resources/static/images/SS/stream%20page.png)  
+*Displays categorized paper streams for easy subject selection*
+
+---
+
 ### 6️⃣ Subjects Details View  
 ![Subjects Details](docs/images/subjects-details.png)  
 *Overview of subjects and categorized paper listings*
@@ -501,6 +507,12 @@ Content-Type: multipart/form-data
 ### 7️⃣ Paper Details View  
 ![Paper Details](src/main/resources/static/images/SS/papers.png) 
 *Detailed information page for each paper with download and preview options*
+
+---
+
+### 9️⃣ Paper Download Page  
+![Paper Download](src/main/resources/static/images/SS/paper%20download.png)  
+*Clean and simple interface to download selected past or model papers*
 
 ---
 
