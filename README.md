@@ -467,7 +467,17 @@ Content-Type: multipart/form-data
 *Homepage showcasing featured papers and quick navigation*
 
 ---
+### 2️⃣ Login Page  
+![Login Page](src/main/resources/static/images/SS/login%20page.png)  
+*Secure login interface for administrators, teachers, and students*
 
+---
+
+### 3️⃣ Register Page  
+![Register Page](src/main/resources/static/images/SS/register%20page.png)  
+*User-friendly registration form for new users to create accounts*
+
+---
 ### 2️⃣ Admin Dashboard  
 ![Admin Dashboard](src/main/resources/static/images/SS/admin%20dashboard.png)
 *Comprehensive admin panel for content and user management*
