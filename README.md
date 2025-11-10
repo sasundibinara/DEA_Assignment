@@ -1,4 +1,4 @@
-# 🧾 ALHORIZON | A/L Paper Management System | DEA Assignment
+<img width="1920" height="2023" alt="upload" src="https://github.com/user-attachments/assets/b7e2bb39-7507-408d-a45b-adf47bbbe1ae" /># 🧾 ALHORIZON | A/L Paper Management System | DEA Assignment
 
 <div align="center">
   
@@ -502,14 +502,8 @@ Content-Type: multipart/form-data
 
 ---
 
-### 6️⃣ Stream Page  
-![Stream Page](src/main/resources/static/images/SS/stream%20page.png)  
-*Displays categorized paper streams for easy subject selection*
-
----
-
 ### 6️⃣ Subjects Details View  
-![Subjects Details](docs/images/subjects-details.png)  
+![Subjects Details](src/main/resources/static/images/SS/pagedetails.png)  
 *Overview of subjects and categorized paper listings*
 
 ---
@@ -520,14 +514,8 @@ Content-Type: multipart/form-data
 
 ---
 
-### 9️⃣ Paper Download Page  
-![Paper Download](src/main/resources/static/images/SS/paper%20download.png)  
-*Clean and simple interface to download selected past or model papers*
-
----
-
 ### 8️⃣ Upload Interface  
-![Upload Interface](docs/images/teacher-upload.png)  
+![Upload Interface](src/main/resources/static/images/SS/upload.png)  
 *Simple and intuitive upload form for teachers to submit papers*
 
 ---
