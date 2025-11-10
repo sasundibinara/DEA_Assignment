@@ -40,4 +40,9 @@ public class HomeController {
         model.addAttribute("stats", stats);
         return "index"; // templates/index.html
     }
+    @GetMapping("/about")
+    public String about() {
+        return "about";  // points to templates/about.html
+    }
+
 }
