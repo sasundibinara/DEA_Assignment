@@ -56,21 +56,13 @@ public class PaperService {
         return papers.save(p);
     }
 
-    /**
-     * Adapter method used by your admin upload controller.
-     * Controller can pass type as String (e.g. "PAST_PAPER"),
-     * we convert it to Paper.Type and reuse create().
-     */
     public void saveUploadedPaper(String title,
                                   int year,
                                   String type,
                                   Long subjectId,
                                   MultipartFile pdf) throws IOException {
 
-        // convert String to enum; the String must match the enum name
         Paper.Type paperType = Paper.Type.valueOf(type);
-
-        // reuse existing logic
         create(title, year, paperType, subjectId, pdf);
     }
 
@@ -118,4 +110,11 @@ public class PaperService {
     public List<Paper> findBySubject(Long subjectId) {
         return papers.findBySubjectIdOrderByYearDesc(subjectId);
     }
+
+    // subject-specific list with pagination (for SFT page etc.)
+    public Page<Paper> findBySubjectPaginated(Long subjectId, Pageable pageable) {
+        return papers.findBySubjectId(subjectId, pageable);
+    }
+
+
 }
