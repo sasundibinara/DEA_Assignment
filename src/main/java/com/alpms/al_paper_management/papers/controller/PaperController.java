@@ -5,15 +5,17 @@ import com.alpms.al_paper_management.papers.service.PaperService;
 import com.alpms.al_paper_management.subjects.service.SubjectService;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -22,6 +24,7 @@ import java.nio.file.Paths;
 @Controller
 @RequestMapping("/papers")
 public class PaperController {
+
     private final PaperService service;
     private final SubjectService subjectService;
 
@@ -30,30 +33,20 @@ public class PaperController {
         this.subjectService = subjectService;
     }
 
-
-
     @GetMapping("/stream")
     public String showStreamPage() {
-        return "papers/stream";   // this points to templates/papers/stream.html
+        return "papers/stream";   // templates/papers/stream.html
     }
 
-
-    // /papers/streams/technology  -> templates/papers/streams/technology.html
+    // /papers/streams/technology -> templates/papers/streams/technology.html
     @GetMapping("/streams/{name}")
     public String stream(@PathVariable("name") String technology) {
         return "papers/streams/" + technology;
     }
 
-    // /papers/streams/papercollection/SFT
-    // -> templates/papers/streams/papercollection/SFT.html
-//    @GetMapping("/streams/papercollection/{name}")
-//    public String paperCollection(@PathVariable("name") String SFT) {
-//        return "papers/streams/papercollection/" + SFT;
-//    }
-
-
-
-    // ✅ Single list endpoint (supports filters)
+    // ===========================
+    // MAIN LIST WITH FILTERS
+    // ===========================
     @GetMapping
     public String list(
             @RequestParam(required = false) Long subjectId,
@@ -64,15 +57,13 @@ public class PaperController {
 
         boolean noFilters = (subjectId == null && year == null);
 
-        // Use pageable result from service
-        var paperPage = noFilters
+        Page<Paper> paperPage = noFilters
                 ? service.findPaginated(page, size)
                 : service.searchPaginated(subjectId, year, page, size);
 
         model.addAttribute("paperPage", paperPage);
         model.addAttribute("papers", paperPage.getContent());
 
-        // For filters and pagination controls
         model.addAttribute("subjects", subjectService.findAll());
         model.addAttribute("selectedSubjectId", subjectId);
         model.addAttribute("selectedYear", year);
@@ -81,14 +72,18 @@ public class PaperController {
 
         return "papers/adpaper";
     }
+
     @GetMapping("/all")
     public String listAll(Model model) {
         model.addAttribute("papers", service.all());
         model.addAttribute("subjects", subjectService.findAll());
-        return "stream";
+        // FIX: real template path
+        return "papers/stream";
     }
 
-    // 📤 Show upload form
+    // ===========================
+    // UPLOAD
+    // ===========================
     @GetMapping("/upload")
     public String uploadForm(Model model) {
         model.addAttribute("types", Paper.Type.values());
@@ -96,7 +91,6 @@ public class PaperController {
         return "papers/upload";
     }
 
-    // 📥 Handle upload
     @PostMapping
     public String upload(@RequestParam String title,
                          @RequestParam Integer year,
@@ -115,14 +109,18 @@ public class PaperController {
         }
     }
 
-    // 🗑️ Delete paper
+    // ===========================
+    // DELETE
+    // ===========================
     @PostMapping("/{id}/delete")
     public String delete(@PathVariable Long id) {
         service.delete(id);
         return "redirect:/papers";
     }
 
-    // ⬇️ Download paper
+    // ===========================
+    // DOWNLOAD
+    // ===========================
     @GetMapping("/{id}/download")
     public ResponseEntity<Resource> downloadPaper(@PathVariable Long id) throws IOException {
         Paper paper = service.get(id);
@@ -133,24 +131,28 @@ public class PaperController {
                         "attachment; filename=\"" + path.getFileName() + "\"")
                 .body(resource);
     }
-    // 🔹 SFT page – load SFT papers from DB
+
+    // ===========================
+    // SFT PAPER GRID (6 per page)
+    // URL: /papers/streams/papercollection/SFT?page=0
+    // ===========================
+    // 🔹 SFT page – load SFT papers from DB with pagination
     @GetMapping("/streams/papercollection/SFT")
-    public String sftPapers(@RequestParam(defaultValue = "0") int page,
-                            @RequestParam(defaultValue = "6") int size,  // 6 cards per page (change as you like)
+    public String sftPapers(@RequestParam(name = "page", defaultValue = "0") int page,
                             Model model) {
 
-        // TODO: use the real subject ID for "Science for Technology"
-        Long sftSubjectId = 17L;
+        int pageSize = 6; // 3 x 2 cards
+        Pageable pageable = PageRequest.of(page, pageSize, Sort.by("year").descending());
 
-        // reuse your existing searchPaginated(subjectId, year, page, size)
-        var paperPage = service.searchPaginated(sftSubjectId, null, page, size);
+        // TODO: set this to the real Subject ID for SFT from your DB
+        Long sftSubjectId = 17L;   // <-- change 1L to the actual SFT subject id
+
+        Page<Paper> paperPage = service.findBySubjectPaginated(sftSubjectId, pageable);
 
         model.addAttribute("papers", paperPage.getContent());
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", paperPage.getTotalPages());
+        model.addAttribute("page", paperPage);   // for pagination bar
 
         return "papers/streams/papercollection/SFT";
     }
-
 
 }
