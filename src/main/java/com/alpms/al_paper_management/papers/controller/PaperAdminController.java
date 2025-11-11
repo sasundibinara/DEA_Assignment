@@ -56,4 +56,5 @@ public class PaperAdminController {
         // PRG pattern – back to form
         return "redirect:/papers/adpaper";
     }
+
 }
